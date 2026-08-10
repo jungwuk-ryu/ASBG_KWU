@@ -1,9 +1,7 @@
 {
-  // 정적 파일만 배포하는 assets-only Worker.
+  // Cloudflare Pages Direct Upload 설정.
   // dist/ 는 build.py 가 생성한다 (진입점 index.html, _headers 포함).
   "name": "asbg-kwu",
   "compatibility_date": "2026-08-07",
-  "assets": {
-    "directory": "./dist"
-  }
+  "pages_build_output_dir": "./dist"
 }
