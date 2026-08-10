@@ -67,8 +67,8 @@ cd dist && python3 -m http.server 5174
 
 ### 배포 전 확인
 
-- 배포 주소는 `https://asbg-kwu.pages.dev` (`build.py` 의 `PROJECT` 로 결정)
-- **커스텀 도메인 연결 시 `build.py` 의 `SITE_URL` 교체** 후 재빌드 — og:url 이 어긋납니다
+- 운영 주소는 `https://asbg-kwu.cloud`이며, Pages 기본 주소는 `https://asbg-kwu.pages.dev`입니다
+- `build.py` 의 `SITE_URL`은 운영 주소와 동일하게 유지해야 합니다 — 공유 시 사용하는 `og:url`에 반영됩니다
 - 지원 폼 URL: `https://tally.so/r/dWGWJr`
 - 활동 사진 (현재 placeholder)
 - Pretendard·Archivo·IBM Plex Mono 는 여전히 외부 CDN 입니다. 폰트라 실패해도

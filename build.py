@@ -31,7 +31,7 @@ DESCRIPTION = (
     "클라우드·AI·데이터·개발을 함께 배우고 만드는 학생 빌더 커뮤니티입니다."
 )
 PROJECT = "asbg-kwu"
-SITE_URL = f"https://{PROJECT}.pages.dev"  # 커스텀 도메인 확정 시 교체
+SITE_URL = "https://asbg-kwu.cloud"
 
 # support.js 가 참조하는 CDN URL → 로컬 경로 매핑
 CDN_MAP = {
