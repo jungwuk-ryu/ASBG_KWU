@@ -69,7 +69,7 @@ cd dist && python3 -m http.server 5174
 
 - 배포 주소는 `https://asbg-kwu.pages.dev` (`build.py` 의 `PROJECT` 로 결정)
 - **커스텀 도메인 연결 시 `build.py` 의 `SITE_URL` 교체** 후 재빌드 — og:url 이 어긋납니다
-- 지원 폼 URL (`href="#"` 상태로 배포하면 CTA 가 죽어 있음)
+- 지원 폼 URL: `https://tally.so/r/dWGWJr`
 - 활동 사진 (현재 placeholder)
 - Pretendard·Archivo·IBM Plex Mono 는 여전히 외부 CDN 입니다. 폰트라 실패해도
   fallback 으로 동작하지만, 완전히 자립시키려면 이것도 vendor 로 내려야 합니다
@@ -98,13 +98,12 @@ AWS Student Builder 웹사이트/      Claude Design 내보내기 결과
 | 지난 기수 활동 | `const PAST = { '4기': [...], ... }` |
 | FAQ | `const FAQS = [...]` |
 | 리크루팅 일정 | `renderVals()` 안의 `stepData` |
-| 현재 진행 단계 (NOW 뱃지) | `data-props` 의 `currentStep` (0부터 시작) |
+| 현재 진행 단계 (NOW 뱃지) | `stepData` 의 `start`/`end` 기준으로 서울 날짜에서 자동 계산 |
 | 기수 번호 | `data-props` 의 `cohort` |
 
 ## 아직 안 채운 것
 
-- [ ] 지원 폼 URL — 현재 `<a id="apply" href="#">`. 폼 주소 나오면 교체
-- [ ] 리크루팅 실제 날짜 — `stepData` 값이 placeholder
+- [ ] 교내 이벤트·Welcome Party 실제 날짜 — 현재 `추후 안내`
 - [ ] 지난 기수 활동 사진 — 아래 참고
 - [ ] 운영진 소개 (FAQ 6번에서 "곧 공개" 로 처리 중)
 
