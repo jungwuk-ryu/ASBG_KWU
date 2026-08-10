@@ -1,5 +1,6 @@
 .DS_Store
 AGENTS.md
+.wrangler/
 AWS Student Builder 웹사이트/uploads/
 
 # dist/ 는 커밋합니다 — Cloudflare 빌드 환경이 python3 로 build.py 를 돌리지 않고
