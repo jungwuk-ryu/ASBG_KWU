@@ -162,7 +162,7 @@ a:hover{color:#5CFFB4}
       <span style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:96px;line-height:.85;letter-spacing:-.05em;font-weight:700;color:rgba(255,255,255,.14)">02</span>
       <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#00E582">RECRUITING</span>
       <h2 style="margin:0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:34px;letter-spacing:-.03em;font-weight:700">리크루팅 일정</h2>
-      <p style="margin:0;font-size:14px;line-height:1.7;color:#7C8894">날짜는 확정 시 업데이트됩니다.</p>
+      <p style="margin:0;font-size:14px;line-height:1.7;color:#7C8894">교내 이벤트와 Welcome Party 일정은 추후 안내됩니다.</p>
     </div>
     <div style="display:flex;flex-direction:column;max-width:1240px;border-top:1px solid rgba(255,255,255,.14)">
       <sc-for list="{{ steps }}" as="step" hint-placeholder-count="6">
@@ -303,7 +303,7 @@ a:hover{color:#5CFFB4}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;cohort&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:20,&quot;section&quot;:&quot;내용&quot;},&quot;currentStep&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:5,&quot;section&quot;:&quot;내용&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;cohort&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:20,&quot;section&quot;:&quot;내용&quot;}}">
 const ACCENT = '#00E582';
 
 const PAST = {
@@ -346,24 +346,34 @@ class Component extends DCLogic {
 
   renderVals() {
     const cohort = this.props.cohort ?? 5;
-    const currentStep = this.props.currentStep ?? 1;
 
     const stepData = [
-      ['서류 접수','3/1(일) ~ 3/11(수)'],
-      ['서류 결과 안내','3/15(일) 21:00'],
-      ['인터뷰','3/17(화) ~ 3/19(목)'],
-      ['최종 결과 안내','3/23(월) 21:00'],
-      ['교내 이벤트 참여','3/25(수) 18:00 ~ 21:00'],
-      ['Welcome Party','4/1(수) 18:30 ~ 20:00']
+      { name:'서류 접수', date:'8/21 ~ 9/6', start:'2026-08-21', end:'2026-09-06' },
+      { name:'서류 결과 안내', date:'9/7', start:'2026-09-07', end:'2026-09-07' },
+      { name:'인터뷰', date:'9/9 ~ 9/11', start:'2026-09-09', end:'2026-09-11' },
+      { name:'최종 결과 안내', date:'9/15', start:'2026-09-15', end:'2026-09-15' },
+      { name:'교내 이벤트 참여', date:'추후 안내' },
+      { name:'Welcome Party', date:'추후 안내' }
     ];
-    const steps = stepData.map(([name, date], i) => ({
-      name, date,
-      no: String(i + 1).padStart(2, '0'),
-      current: i === currentStep,
-      numStyle: "font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;padding:6px 0;text-align:center;color:" +
-        (i <= currentStep ? '#141D26' : '#6B7683') + ';background:' + (i <= currentStep ? ACCENT : 'transparent') +
-        (i <= currentStep ? '' : ';border:1px dashed rgba(255,255,255,.22)')
-    }));
+    const seoulDateParts = {};
+    new Intl.DateTimeFormat('en-US', {
+      timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'
+    }).formatToParts(new Date()).forEach(part => { seoulDateParts[part.type] = part.value; });
+    const today = seoulDateParts.year + '-' + seoulDateParts.month + '-' + seoulDateParts.day;
+    const steps = stepData.map((step, i) => {
+      const current = !!step.start && today >= step.start && today <= step.end;
+      const completed = !!step.end && today > step.end;
+      const highlighted = current || completed;
+      return {
+        name: step.name,
+        date: step.date,
+        no: String(i + 1).padStart(2, '0'),
+        current,
+        numStyle: "font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;padding:6px 0;text-align:center;color:" +
+          (highlighted ? '#141D26' : '#6B7683') + ';background:' + (highlighted ? ACCENT : 'transparent') +
+          (highlighted ? '' : ';border:1px dashed rgba(255,255,255,.22)')
+      };
+    });
 
     const tabBase = "font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;padding:15px 26px;cursor:pointer;border:0;border-right:1px solid rgba(255,255,255,.14);transition:background .18s ease,color .18s ease";
     const keys = Object.keys(PAST);
