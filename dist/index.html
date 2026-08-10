@@ -55,6 +55,9 @@ a:hover{color:#5CFFB4}
 }
 @media (max-width:520px){
  nav a[href="#top"] span{display:none !important}
+ [data-recruit-step]{grid-template-columns:52px minmax(0,1fr) !important;gap:8px 16px !important;padding:22px 0 !important}
+ [data-recruit-step] [data-step-name]{font-size:18px !important}
+ [data-recruit-step] [data-step-date]{grid-column:2;white-space:normal !important}
 }
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}html{scroll-behavior:auto}}
 </style>
@@ -166,15 +169,15 @@ a:hover{color:#5CFFB4}
     </div>
     <div style="display:flex;flex-direction:column;max-width:1240px;border-top:1px solid rgba(255,255,255,.14)">
       <sc-for list="{{ steps }}" as="step" hint-placeholder-count="6">
-        <div data-reveal style="display:grid;grid-template-columns:64px 1fr auto;gap:24px;align-items:center;padding:26px 8px;border-bottom:1px solid rgba(255,255,255,.14)">
+        <div data-reveal data-recruit-step style="display:grid;grid-template-columns:64px 1fr auto;gap:24px;align-items:center;padding:26px 8px;border-bottom:1px solid rgba(255,255,255,.14)">
           <span style="{{ step.numStyle }}">{{ step.no }}</span>
-          <span style="display:flex;align-items:center;gap:14px;font-size:21px;font-weight:700;letter-spacing:-.02em;color:#fff">
+          <span data-step-name style="display:flex;align-items:center;gap:14px;font-size:21px;font-weight:700;letter-spacing:-.02em;color:#fff">
             {{ step.name }}
             <sc-if value="{{ step.current }}" hint-placeholder-val="{{ false }}">
               <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#141D26;background:#00E582;padding:5px 9px">NOW</span>
             </sc-if>
           </span>
-          <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:15px;color:#A9B4BF;white-space:nowrap">{{ step.date }}</span>
+          <span data-step-date style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:15px;color:#A9B4BF;white-space:nowrap">{{ step.date }}</span>
         </div>
       </sc-for>
       <a href="https://tally.so/r/dWGWJr" target="_blank" rel="noopener" style="align-self:flex-start;margin-top:44px;background:#00E582;color:#141D26;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-weight:700;font-size:16px;padding:18px 32px;transition:background .18s ease" style-hover="background:#5CFFB4">지원서 작성하기 →</a>
