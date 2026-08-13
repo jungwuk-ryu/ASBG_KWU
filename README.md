@@ -48,7 +48,7 @@ npx wrangler pages deploy dist --project-name asbg-kwu --branch main
 | `ASBG Landing.dc.html` → `index.html` | Pages 는 `index.html` 을 찾음. 파일명 공백도 제거 |
 | `uploads/`, `scraps/`, `.thumbnail` 제외 | AWS PPT 템플릿·원본 이미지가 공개 URL 로 노출되는 것 방지 (21MB → 1MB) |
 | title, description, canonical, OG/Twitter, JSON-LD 주입 | 검색 결과와 링크 공유 정보 제공 |
-| `robots.txt`, `sitemap.xml` 생성 | 검색 엔진 크롤링과 대표 URL 발견 지원 |
+| `robots.txt`, `sitemap.xml`, `llms.txt` 생성 | 검색 엔진 크롤링과 기계 판독 지원 |
 | React UMD 를 `vendor/` 로컬 파일로 전환 | unpkg 장애 시 사이트가 빈 화면이 되는 것 방지 |
 | `_headers` 생성 | `assets/`·`vendor/` 는 1년 캐시, 보안 헤더 |
 

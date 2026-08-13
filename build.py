@@ -6,7 +6,7 @@ Claude Design 내보내기 결과는 그대로 배포할 수 없다. 이 스크�
   - uploads/, scraps/, .thumbnail 등 비공개 부산물 제외
   - <title>, lang, description, og 태그, favicon 주입
   - canonical, robots, JSON-LD 구조화 데이터 주입
-  - robots.txt, sitemap.xml 생성
+  - robots.txt, sitemap.xml, llms.txt 생성
   - React UMD 를 unpkg CDN 대신 vendor/ 로컬 파일에서 로드하도록 전환
   - Cloudflare Pages 용 _headers 생성
 
@@ -123,6 +123,25 @@ SITEMAP = f"""<?xml version="1.0" encoding="UTF-8"?>
 </urlset>
 """
 
+LLMS_TXT = f"""# ASBG KWU
+
+> 광운대학교 AWS Student Builder Group 공식 웹사이트입니다. AWS와 클라우드를 함께 배우고 직접 만드는 학생 커뮤니티입니다.
+
+## 공식 링크
+
+- [ASBG KWU]({CANONICAL_URL}): 5기 소개, 모집 일정, 활동 내용, 지난 기수 활동, 자주 묻는 질문
+- [5기 지원서](https://tally.so/r/dWGWJr): ASBG KWU 5기 지원 폼
+- [Instagram](https://www.instagram.com/aws.sbg.kwu/): 공식 소식과 활동 기록
+
+## 5기 모집 일정
+
+- 서류 접수: 2026-08-21 ~ 2026-09-06
+- 서류 결과 안내: 2026-09-07
+- 인터뷰: 2026-09-09 ~ 2026-09-11
+- 최종 결과 안내: 2026-09-15
+- Welcome Party: 2026-09-18
+"""
+
 # support.js 는 로드 시점에 __resources 를 읽으므로 반드시 그 앞에 와야 한다.
 SUPPORT_TAG = '<script src="./support.js"></script>'
 RESOURCES_TAG = (
@@ -188,9 +207,10 @@ def main():
     html = html.replace("</head>", HEAD_INJECT + "</head>", 1)
     (DIST / "index.html").write_text(html, encoding="utf-8")
 
-    # 4. 검색 크롤러용 정적 파일
+    # 4. 검색·기계 판독용 정적 파일
     (DIST / "robots.txt").write_text(ROBOTS, encoding="utf-8")
     (DIST / "sitemap.xml").write_text(SITEMAP, encoding="utf-8")
+    (DIST / "llms.txt").write_text(LLMS_TXT, encoding="utf-8")
 
     # 5. Cloudflare Pages 설정
     (DIST / "_headers").write_text(HEADERS, encoding="utf-8")
