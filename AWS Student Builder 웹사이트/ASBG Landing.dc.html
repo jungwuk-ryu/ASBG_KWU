@@ -68,7 +68,6 @@ a:hover{color:#5CFFB4}
 }
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}html{scroll-behavior:auto}}
 </style>
-<script src="./image-slot.js"></script>
 </helmet>
 
 <div style="min-height:100vh;overflow-x:hidden;background:#141D26">
@@ -293,19 +292,12 @@ a:hover{color:#5CFFB4}
         </sc-if>
       </sc-for>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" data-cards-3>
-      <sc-for list="{{ activities }}" as="item" hint-placeholder-count="4">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px" data-past-grid>
+      <sc-for list="{{ activities }}" as="item" hint-placeholder-count="3">
         <article style="display:flex;flex-direction:column;background:#18222C;border:1px solid rgba(255,255,255,.14);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#00E582;transform:translateY(-3px)">
-          <sc-if value="{{ item.hasPhoto }}" hint-placeholder-val="{{ true }}">
-            <div style="position:relative;width:100%;aspect-ratio:16/10;background:#1E2A35;border-bottom:1px solid rgba(255,255,255,.14)">
-              <image-slot id="{{ item.slotId }}" shape="rect" placeholder="활동 사진"></image-slot>
-            </div>
-          </sc-if>
-          <sc-if value="{{ item.noPhoto }}" hint-placeholder-val="{{ false }}">
-            <div style="width:100%;aspect-ratio:16/10;border-bottom:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:20px">
-              <span style="width:100%;height:100%;border:1px dashed rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#6B7683">NO PHOTO</span>
-            </div>
-          </sc-if>
+          <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#1E2A35;border-bottom:1px solid rgba(255,255,255,.14)">
+            <img src="{{ item.photo }}" alt="{{ item.alt }}" loading="lazy" decoding="async" fetchpriority="low" style="{{ item.imageStyle }}">
+          </div>
           <div style="display:flex;flex-direction:column;gap:12px;padding:26px 24px">
             <span style="{{ item.catStyle }}">{{ item.cat }}</span>
             <h3 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em;text-wrap:pretty">{{ item.title }}</h3>
@@ -366,27 +358,21 @@ const ACCENT = '#00E582';
 
 const PAST = {
   '4기': [
-    { cat:'세션', title:'클라우드 입문 핸즈온 1~8주차', desc:'EC2, S3, IAM부터 시작해 매주 직접 손으로 만들어 보는 8주 커리큘럼을 진행했습니다.', photo:true },
-    { cat:'프로젝트', title:'학기말 팀 프로젝트 데모데이', desc:'5개 팀이 각자 만든 서비스를 배포하고 데모했습니다. 아키텍처 리뷰와 상호 피드백까지 함께 진행했습니다.', photo:true },
-    { cat:'연합', title:'수도권 빌더 그룹 연합 세션', desc:'타 학교 빌더 그룹과 함께한 합동 세션.', photo:false },
-    { cat:'커리어', title:'현업 엔지니어 커리어 토크', desc:'클라우드 엔지니어로 일한다는 것에 대해. 이력서, 포트폴리오, 첫 회사 고르는 법까지 두 시간 동안 질문을 받았습니다.', photo:true },
-    { cat:'이벤트', title:'Welcome Party', desc:'기수 시작을 알리는 첫 오프라인 모임.', photo:true }
+    { cat:'세션', title:'RAG와 서버리스 입문 핸즈온', desc:'RAG와 서버리스 아키텍처를 주제로, 설명을 듣고 직접 따라 만드는 입문 핸즈온을 진행했습니다.', photo:'assets/photos/4-hands-on.jpg', alt:'강의실 앞에서 RAG와 서버리스 입문 핸즈온을 발표하는 4기 멤버', position:'center 44%' },
+    { cat:'커뮤니티', title:'4기 첫 단체 사진', desc:'Introductory Hands-On을 마친 뒤 한자리에 모였습니다. 함께 배우고 만들 한 학기의 출발을 기록했습니다.', photo:'assets/photos/4-group.jpg', alt:'Introductory Hands-On 화면 앞에 모인 ASBG KWU 4기 멤버들', position:'center 52%' }
   ],
   '3기': [
-    { cat:'세션', title:'서버리스 아키텍처 스터디', desc:'Lambda와 API Gateway로 백엔드 없이 서비스 만들기. 6주간 매주 실습 과제를 수행했습니다.', photo:true },
-    { cat:'프로젝트', title:'교내 서비스 개발 소모임', desc:'학교 안에서 실제로 쓰이는 문제를 골라 네 명이 한 학기 동안 개발했습니다.', photo:false },
-    { cat:'이벤트', title:'교내 부스 이벤트', desc:'축제 기간 부스를 운영하며 클라우드 퀴즈와 굿즈를 준비했습니다.', photo:true },
-    { cat:'커리어', title:'수료 발표회', desc:'한 학기 동안 각자 남긴 것을 발표하고 수료증을 전달했습니다.', photo:true }
+    { cat:'세션', title:'서버리스 아키텍처 핸즈온', desc:'서버를 직접 관리하지 않고 서비스를 구성하는 방법을 배우고, Lambda를 중심으로 한 서버리스 아키텍처를 함께 살펴봤습니다.', photo:'assets/photos/3-serverless.jpg', alt:'강의실에서 서버리스 아키텍처를 발표하는 3기 멤버', position:'center 46%' },
+    { cat:'소모임', title:'관심사로 연결된 자율 소모임', desc:'시간 관리부터 AWS 서비스 개발과 자격증 준비까지, 관심사가 맞는 멤버들이 직접 주제를 정해 활동했습니다.', photo:'assets/photos/3-crews.jpg', alt:'3기에 개설된 시간 관리, 핸즈온, 서비스 개발, 자격증 소모임 소개 화면', position:'center center' },
+    { cat:'친목', title:'보드게임 카페 친목 모임', desc:'세션 밖에서도 편하게 만나 보드게임을 즐기며 서로를 알아가는 시간을 가졌습니다.', photo:'assets/photos/3-board-game.jpg', alt:'보드게임 카페에서 테이블에 둘러앉아 게임을 즐기는 3기 멤버들', position:'center center' }
   ],
   '2기': [
-    { cat:'세션', title:'AWS 자격증 스터디', desc:'Cloud Practitioner 대비 스터디를 운영해 참여자 다수가 자격증을 취득했습니다.', photo:true },
-    { cat:'연합', title:'타 대학 연합 해커톤', desc:'무박 2일 해커톤 참가.', photo:false },
-    { cat:'프로젝트', title:'사이드 프로젝트 소모임', desc:'관심사가 맞는 사람끼리 팀을 꾸려 자유 주제로 개발했습니다.', photo:true }
+    { cat:'세션', title:'AWS 실습 핸즈온', desc:'강의실에 모여 설명을 듣고, 각자의 노트북으로 AWS 환경을 직접 구성하며 실습했습니다.', photo:'assets/photos/2-hands-on.jpg', alt:'강의실에서 노트북으로 AWS 실습에 참여하는 2기 멤버들', position:'center center' },
+    { cat:'스터디', title:'함께 공부한 그룹 스터디', desc:'작은 팀으로 모여 각자의 진도를 공유하고, 막힌 부분을 함께 풀어 가며 공부했습니다.', photo:'assets/photos/2-group-study.jpg', alt:'노트북을 펼쳐 놓고 함께 공부하는 2기 그룹 스터디 멤버들', position:'center center' },
+    { cat:'커뮤니티', title:'2기의 첫 단체 사진', desc:'Welcome 세션을 마친 뒤 한자리에 모였습니다. 함께 시작한 2기의 첫 순간을 기록했습니다.', photo:'assets/photos/2-group.jpg', alt:'Welcome to the AWS Cloud Clubs 화면 앞에 모인 2기 멤버들', position:'center center' }
   ],
   '1기': [
-    { cat:'이벤트', title:'창립 OT', desc:'동아리의 첫 모임. 앞으로 무엇을 할지 함께 정했습니다.', photo:true },
-    { cat:'세션', title:'첫 정기 세션', desc:'클라우드가 뭔지부터 시작한 입문 세션.', photo:true },
-    { cat:'프로젝트', title:'미니 프로젝트 발표', desc:'두 달 동안 만든 작은 서비스들을 서로 보여 주고 피드백을 나눴습니다.', photo:false }
+    { cat:'세션', title:'1기 AWS 실습 세션', desc:'AWS Cloud Club으로 출발한 첫 기수는 강의실에 모여 발표와 실습을 오가며 클라우드의 기본을 함께 익혔습니다.', photo:'assets/photos/1-activity.jpg', alt:'강의실에서 발표와 AWS 실습에 참여하는 1기 멤버들의 활동 모음', position:'center 47%' }
   ]
 };
 
@@ -450,10 +436,9 @@ class Component extends DCLogic {
       style: tabBase
     }));
 
-    const activities = (PAST[this.state.tab] || []).map((a, i) => ({
-      cat: a.cat, title: a.title, desc: a.desc,
-      hasPhoto: a.photo, noPhoto: !a.photo,
-      slotId: 'past-' + this.state.tab + '-' + i,
+    const activities = (PAST[this.state.tab] || []).map(a => ({
+      cat: a.cat, title: a.title, desc: a.desc, photo: a.photo, alt: a.alt,
+      imageStyle:'display:block;width:100%;height:100%;object-fit:cover;object-position:' + (a.position || 'center center'),
       catStyle: "align-self:flex-start;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;padding:6px 10px;color:" + ACCENT + ';border:1px solid rgba(0,229,130,.5)'
     }));
 
