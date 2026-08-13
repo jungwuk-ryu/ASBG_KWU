@@ -107,6 +107,8 @@ a:hover{color:#5CFFB4}
  [data-cards-3] > div:last-child{border-bottom:0}
  [data-past-tabs]{width:100%}
  [data-past-tabs] button{flex:1;min-width:0;padding-left:10px !important;padding-right:10px !important}
+ [data-past-grid]{grid-template-columns:1fr !important}
+ [data-learn-build-connect]{justify-content:center !important;gap:.34em !important;font-size:5.9cqw !important}
  footer img{max-width:100%;height:auto !important}
 }
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}html{scroll-behavior:auto}}
@@ -203,7 +205,7 @@ a:hover{color:#5CFFB4}
       </div>
     </div>
     <div style="border-top:1px solid rgba(20,29,38,.35);padding-top:70px" data-reveal>
-      <div style="container-type:inline-size;display:flex;align-items:center;justify-content:space-between;gap:2.2cqw;font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:6.1cqw;line-height:.92;letter-spacing:-.045em;font-weight:700;text-transform:uppercase;color:#141D26;white-space:nowrap">
+      <div data-learn-build-connect style="container-type:inline-size;display:flex;align-items:center;justify-content:space-between;gap:2.2cqw;font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:6.1cqw;line-height:.92;letter-spacing:-.045em;font-weight:700;text-transform:uppercase;color:#141D26;white-space:nowrap">
         <span>Learn</span>
         <span style="color:#00E582">+</span>
         <span>Build</span>
@@ -339,7 +341,7 @@ a:hover{color:#5CFFB4}
         </sc-if>
       </sc-for>
     </div>
-    <div id="past-activities" role="tabpanel" aria-live="polite" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px" data-past-grid>
+    <div id="past-activities" role="tabpanel" aria-live="polite" style="{{ pastGridStyle }}" data-past-grid>
       <sc-for list="{{ activities }}" as="item" hint-placeholder-count="3">
         <article style="display:flex;flex-direction:column;background:#18222C;border:1px solid rgba(255,255,255,.14);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#00E582;transform:translateY(-3px)">
           <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#1E2A35;border-bottom:1px solid rgba(255,255,255,.14)">
@@ -485,11 +487,14 @@ class Component extends DCLogic {
       style: tabBase
     }));
 
-    const activities = (PAST[this.state.tab] || []).map(a => ({
+    const activityItems = PAST[this.state.tab] || [];
+    const activities = activityItems.map(a => ({
       cat: a.cat, title: a.title, desc: a.desc, photo: a.photo, alt: a.alt,
       imageStyle:'display:block;width:100%;height:100%;object-fit:cover;object-position:' + (a.position || 'center center'),
       catStyle: "align-self:flex-start;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;padding:6px 10px;color:" + ACCENT + ';border:1px solid rgba(0,229,130,.5)'
     }));
+    const pastGridStyle = 'display:grid;grid-template-columns:' +
+      (activityItems.length === 1 ? 'minmax(280px,400px)' : 'repeat(auto-fit,minmax(min(100%,280px),1fr))') + ';gap:20px';
 
     const faqs = FAQS.map(([question, answer], i) => {
       const open = !!this.state.open[i];
@@ -526,7 +531,7 @@ class Component extends DCLogic {
       cohortKo: cohort + '기',
       menuOpen: this.state.menuOpen,
       toggleMenu,
-      steps, calendarEvents, tabs, activities, faqs
+      steps, calendarEvents, tabs, activities, pastGridStyle, faqs
     };
   }
 }
