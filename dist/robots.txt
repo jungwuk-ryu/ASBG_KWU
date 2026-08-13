@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://asbg-kwu.cloud/sitemap.xml

@@ -5,12 +5,15 @@ Claude Design 내보내기 결과는 그대로 배포할 수 없다. 이 스크�
   - 진입점을 index.html 로 이름 변경
   - uploads/, scraps/, .thumbnail 등 비공개 부산물 제외
   - <title>, lang, description, og 태그, favicon 주입
+  - canonical, robots, JSON-LD 구조화 데이터 주입
+  - robots.txt, sitemap.xml 생성
   - React UMD 를 unpkg CDN 대신 vendor/ 로컬 파일에서 로드하도록 전환
   - Cloudflare Pages 용 _headers 생성
 
     python3 build.py        # dist/ 생성
 """
 
+import json
 import re
 import shutil
 import sys
@@ -25,13 +28,17 @@ DIST = ROOT / "dist"
 EXCLUDE_DIRS = {"uploads", "scraps"}
 EXCLUDE_FILES = {".thumbnail", ".DS_Store"}
 
-TITLE = "AWS Student Builder Group — 광운대학교"
+TITLE = "ASBG KWU 5기 모집 | AWS Student Builder Group 광운대학교"
 DESCRIPTION = (
-    "광운대학교 AWS Student Builder Group 5기 멤버를 모집합니다. "
-    "클라우드·AI·데이터·개발을 함께 배우고 만드는 학생 빌더 커뮤니티입니다."
+    "광운대학교 AWS Student Builder Group(ASBG KWU) 5기 멤버를 모집합니다. "
+    "서류 접수는 8월 21일부터 9월 6일까지이며, AWS와 클라우드를 함께 배우고 "
+    "직접 만드는 학생 커뮤니티입니다."
 )
 PROJECT = "asbg-kwu"
 SITE_URL = "https://asbg-kwu.cloud"
+CANONICAL_URL = f"{SITE_URL}/"
+OG_IMAGE_URL = f"{SITE_URL}/assets/photos/og-cover.jpg"
+SITEMAP_LASTMOD = "2026-08-13"
 
 # support.js 가 참조하는 CDN URL → 로컬 경로 매핑
 CDN_MAP = {
@@ -39,15 +46,81 @@ CDN_MAP = {
     "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "vendor/react-dom.production.min.js",
 }
 
+STRUCTURED_DATA = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "@id": f"{CANONICAL_URL}#organization",
+            "name": "AWS Student Builder Group — Kwangwoon University",
+            "alternateName": "ASBG KWU",
+            "url": CANONICAL_URL,
+            "logo": f"{SITE_URL}/assets/program-icon-mint.svg",
+            "image": OG_IMAGE_URL,
+            "description": DESCRIPTION,
+            "foundingDate": "2024",
+            "sameAs": ["https://www.instagram.com/aws.sbg.kwu/"],
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Seoul",
+                "addressCountry": "KR",
+            },
+        },
+        {
+            "@type": "WebSite",
+            "@id": f"{CANONICAL_URL}#website",
+            "url": CANONICAL_URL,
+            "name": "ASBG KWU",
+            "alternateName": "AWS Student Builder Group 광운대학교",
+            "description": DESCRIPTION,
+            "inLanguage": "ko-KR",
+            "publisher": {"@id": f"{CANONICAL_URL}#organization"},
+        },
+    ],
+}
+
 HEAD_INJECT = f"""<title>{TITLE}</title>
 <meta name="description" content="{DESCRIPTION}">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="theme-color" content="#141D26">
+<meta name="application-name" content="ASBG KWU">
+<link rel="canonical" href="{CANONICAL_URL}">
+<link rel="alternate" hreflang="ko-KR" href="{CANONICAL_URL}">
+<link rel="alternate" hreflang="x-default" href="{CANONICAL_URL}">
 <link rel="icon" href="assets/program-icon-mint.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{TITLE}">
 <meta property="og:description" content="{DESCRIPTION}">
-<meta property="og:url" content="{SITE_URL}">
+<meta property="og:url" content="{CANONICAL_URL}">
 <meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="ASBG KWU">
+<meta property="og:image" content="{OG_IMAGE_URL}">
+<meta property="og:image:secure_url" content="{OG_IMAGE_URL}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Introductory Hands-On을 마치고 모인 ASBG KWU 4기 멤버들">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{TITLE}">
+<meta name="twitter:description" content="{DESCRIPTION}">
+<meta name="twitter:image" content="{OG_IMAGE_URL}">
+<meta name="twitter:image:alt" content="Introductory Hands-On을 마치고 모인 ASBG KWU 4기 멤버들">
+<script type="application/ld+json">{json.dumps(STRUCTURED_DATA, ensure_ascii=False, separators=(",", ":"))}</script>
+"""
+
+ROBOTS = f"""User-agent: *
+Allow: /
+
+Sitemap: {SITE_URL}/sitemap.xml
+"""
+
+SITEMAP = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{CANONICAL_URL}</loc>
+    <lastmod>{SITEMAP_LASTMOD}</lastmod>
+  </url>
+</urlset>
 """
 
 # support.js 는 로드 시점에 __resources 를 읽으므로 반드시 그 앞에 와야 한다.
@@ -115,7 +188,11 @@ def main():
     html = html.replace("</head>", HEAD_INJECT + "</head>", 1)
     (DIST / "index.html").write_text(html, encoding="utf-8")
 
-    # 4. Cloudflare Pages 설정
+    # 4. 검색 크롤러용 정적 파일
+    (DIST / "robots.txt").write_text(ROBOTS, encoding="utf-8")
+    (DIST / "sitemap.xml").write_text(SITEMAP, encoding="utf-8")
+
+    # 5. Cloudflare Pages 설정
     (DIST / "_headers").write_text(HEADERS, encoding="utf-8")
 
     total = sum(f.stat().st_size for f in DIST.rglob("*") if f.is_file())
