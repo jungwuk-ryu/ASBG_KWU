@@ -21,8 +21,10 @@
 html{scroll-behavior:smooth;background:#141D26}
 body{margin:0;background:#141D26;color:#fff;font-family:'Pretendard Variable',Pretendard,'Amazon Ember Display',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
+section[id],header[id],[id="calendar"]{scroll-margin-top:84px}
 a{color:#00E582;text-decoration:none}
 a:hover{color:#5CFFB4}
+:focus-visible{outline:3px solid #00E582;outline-offset:4px}
 @keyframes ringPulse{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(3);opacity:0}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 [data-reveal]{animation:fadeUp .55s cubic-bezier(.67,.33,.23,1.02) both}
@@ -60,22 +62,38 @@ a:hover{color:#5CFFB4}
 }
 @media (max-width:520px){
  nav a[href="#top"] span{display:none !important}
+ [data-page-shell]{padding-left:20px !important;padding-right:20px !important}
+ [data-section-shell]{padding-top:88px !important;padding-bottom:88px !important}
+ [data-hero-shell]{padding-top:72px !important;padding-bottom:80px !important}
+ [data-footer-shell]{padding-top:72px !important;padding-bottom:72px !important}
+ [data-hero-grid]{gap:56px !important}
+ [data-hero-side]{width:100% !important}
+ [data-hero-side] a{width:100%;text-align:center;padding-left:20px !important;padding-right:20px !important}
  [data-recruit-step]{grid-template-columns:52px minmax(0,1fr) !important;gap:8px 16px !important;padding:22px 0 !important}
  [data-recruit-step] [data-step-name]{font-size:18px !important}
  [data-recruit-step] [data-step-date]{grid-column:2;white-space:normal !important}
  [data-calendar-table] td{height:58px !important;padding:6px !important}
  [data-calendar-event-label]{display:none !important}
  [data-calendar-events]{grid-template-columns:1fr !important}
+ [data-cards-3] > div{border-right:0 !important;border-bottom:1px solid rgba(255,255,255,.14)}
+ [data-cards-3] > div:last-child{border-bottom:0}
+ [data-past-tabs]{width:100%}
+ [data-past-tabs] button{flex:1;min-width:0;padding-left:10px !important;padding-right:10px !important}
+ footer img{max-width:100%;height:auto !important}
 }
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}html{scroll-behavior:auto}}
+@media (hover:none){
+ [data-past-grid] article:hover{border-color:rgba(255,255,255,.14) !important;transform:none !important}
+ [data-cards-3] > div:hover{background:transparent !important}
+}
 </style>
 </helmet>
 
-<div style="min-height:100vh;overflow-x:hidden;background:#141D26">
+<div style="min-height:100vh;overflow-x:clip;background:#141D26">
 
 <nav style="position:sticky;top:0;z-index:50;background:rgba(20,29,38,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.14)">
   <div style="max-width:1720px;margin:0 auto;padding:0 56px;height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px">
-    <a href="#top" style="display:flex;align-items:center;gap:18px;color:#fff">
+    <a href="#top" aria-label="AWS Student Builder Group · ASBG KWU 홈으로 이동" style="display:flex;align-items:center;gap:18px;color:#fff">
       <img src="assets/program-icon-mint.svg" alt="" style="height:32px;width:auto">
       <span style="font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:16px;font-weight:600;letter-spacing:-.01em;color:#fff;white-space:nowrap">AWS Student Builder Group</span>
     </a>
@@ -95,14 +113,14 @@ a:hover{color:#5CFFB4}
             <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"></circle>
           </svg>
         </a>
-      <button type="button" onClick="{{ toggleMenu }}" aria-label="메뉴" style="display:none;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;width:46px;height:46px;font-size:18px;cursor:pointer" data-menu-btn>≡</button>
+      <button type="button" onClick="{{ toggleMenu }}" aria-label="메뉴 열기" aria-expanded="{{ menuOpen }}" aria-controls="mobile-menu" style="display:none;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;width:46px;height:46px;font-size:18px;cursor:pointer" data-menu-btn>≡</button>
     </span>
   </div>
 </nav>
 
 <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-  <div style="position:fixed;inset:0;z-index:60;background:#141D26;display:flex;flex-direction:column;padding:32px;gap:4px">
-    <button type="button" onClick="{{ toggleMenu }}" style="align-self:flex-end;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;width:46px;height:46px;font-size:18px;cursor:pointer">×</button>
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="사이트 메뉴" style="position:fixed;inset:0;z-index:60;background:#141D26;display:flex;flex-direction:column;padding:32px;gap:4px">
+    <button type="button" onClick="{{ toggleMenu }}" aria-label="메뉴 닫기" style="align-self:flex-end;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;width:46px;height:46px;font-size:18px;cursor:pointer">×</button>
     <a href="#about" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">소개</a>
     <a href="#recruiting" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">모집</a>
     <a href="#calendar" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">캘린더</a>
@@ -118,7 +136,7 @@ a:hover{color:#5CFFB4}
   <div data-corner style="position:absolute;top:0;left:0;width:120px;height:64px;background:#00E582"></div>
   <div data-corner style="position:absolute;top:0;right:0;width:200px;height:64px;background:#00E582"></div>
   <div data-corner style="position:absolute;bottom:0;left:0;width:64px;height:56px;background:#00E582"></div>
-  <div style="position:relative;width:100%;max-width:1720px;margin:0 auto;padding:110px 56px;display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center" data-hero-grid>
+  <div style="position:relative;width:100%;max-width:1720px;margin:0 auto;padding:110px 56px;display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center" data-hero-grid data-page-shell data-hero-shell>
     <div style="container-type:inline-size;display:flex;flex-direction:column;align-items:flex-start;gap:36px">
       <span style="display:flex;align-items:center;gap:14px;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;color:#7C8894">
         <span style="width:40px;height:1px;background:rgba(255,255,255,.3)"></span>KWANGWOON UNIVERSITY · SEOUL
@@ -136,12 +154,12 @@ a:hover{color:#5CFFB4}
 </header>
 
 <section id="about" style="background:#F2EFE9;color:#141D26;border-bottom:1px solid rgba(255,255,255,.14)">
-  <div style="max-width:1720px;margin:0 auto;padding:110px 56px 130px;display:flex;flex-direction:column;gap:0">
+  <div style="max-width:1720px;margin:0 auto;padding:110px 56px 130px;display:flex;flex-direction:column;gap:0" data-page-shell data-section-shell>
     <div style="border-top:1px solid rgba(20,29,38,.35);padding-top:20px;display:flex;align-items:center;gap:80px" data-reveal>
       <span style="display:flex;align-items:center;gap:14px;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#141D26">
         <span style="width:9px;height:9px;background:#141D26"></span>ABOUT US
       </span>
-      <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#6B7280">01 / 05</span>
+      <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#59616B">01 / 05</span>
     </div>
     <div style="display:grid;grid-template-columns:1.35fr .65fr;gap:96px;align-items:start;padding:100px 0 110px" data-section-grid>
       <h2 style="margin:0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:60px;line-height:1.26;letter-spacing:-.04em;font-weight:700;text-wrap:pretty;color:#141D26" data-reveal data-big>
@@ -170,9 +188,9 @@ a:hover{color:#5CFFB4}
 
 <section id="recruiting" style="position:relative;border-bottom:1px solid rgba(255,255,255,.14);background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:160px 160px">
   <div data-corner style="position:absolute;top:0;right:0;width:160px;height:48px;background:#00E582"></div>
-  <div style="position:relative;max-width:1720px;margin:0 auto;padding:130px 56px;display:grid;grid-template-columns:320px 1fr;gap:88px" data-section-grid>
+  <div style="position:relative;max-width:1720px;margin:0 auto;padding:130px 56px;display:grid;grid-template-columns:320px 1fr;gap:88px" data-section-grid data-page-shell data-section-shell>
     <div style="display:flex;flex-direction:column;gap:18px" data-reveal>
-      <span style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:96px;line-height:.85;letter-spacing:-.05em;font-weight:700;color:rgba(255,255,255,.14)">02</span>
+      <span aria-hidden="true" style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:96px;line-height:.85;letter-spacing:-.05em;font-weight:700;color:rgba(255,255,255,.4)">02</span>
       <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#00E582">RECRUITING</span>
       <h2 style="margin:0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:34px;letter-spacing:-.03em;font-weight:700">리크루팅 일정</h2>
       <p style="margin:0;font-size:14px;line-height:1.7;color:#7C8894">서류 접수부터 Welcome Party까지, 5기 모집의 주요 일정을 확인하세요.</p>
@@ -243,7 +261,7 @@ a:hover{color:#5CFFB4}
 </section>
 
 <section id="future" style="border-bottom:1px solid rgba(255,255,255,.14)">
-  <div style="max-width:1720px;margin:0 auto;padding:130px 56px;display:flex;flex-direction:column;gap:56px">
+  <div style="max-width:1720px;margin:0 auto;padding:130px 56px;display:flex;flex-direction:column;gap:56px" data-page-shell data-section-shell>
     <div style="display:flex;flex-direction:column;gap:24px;border-top:1px solid rgba(255,255,255,.14);padding-top:28px" data-reveal>
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:32px;flex-wrap:wrap">
         <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#00E582">03 / WHAT WE DO</span>
@@ -279,22 +297,22 @@ a:hover{color:#5CFFB4}
 
 <section id="past" style="position:relative;border-bottom:1px solid rgba(255,255,255,.14);background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:160px 160px">
   <div data-corner style="position:absolute;bottom:0;left:0;width:120px;height:48px;background:#00E582"></div>
-  <div style="position:relative;max-width:1720px;margin:0 auto;padding:130px 56px;display:flex;flex-direction:column;gap:40px">
+  <div style="position:relative;max-width:1720px;margin:0 auto;padding:130px 56px;display:flex;flex-direction:column;gap:40px" data-page-shell data-section-shell>
     <div style="display:flex;flex-direction:column;gap:16px" data-reveal>
       <span style="display:flex;align-items:center;gap:14px;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#00E582"><span style="width:36px;height:1px;background:rgba(0,229,130,.5)"></span>04 / PAST</span>
       <h2 style="margin:10px 0 0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:42px;letter-spacing:-.03em;font-weight:700" data-big>지난 기수 활동</h2>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:0;border:1px solid rgba(255,255,255,.14);align-self:flex-start">
+    <div role="tablist" aria-label="지난 기수 선택" style="display:flex;flex-wrap:wrap;gap:0;border:1px solid rgba(255,255,255,.14);align-self:flex-start" data-past-tabs>
       <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="4">
         <sc-if value="{{ tab.active }}" hint-placeholder-val="{{ true }}">
-          <button type="button" onClick="{{ tab.select }}" style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;padding:15px 26px;cursor:pointer;border:0;border-right:1px solid rgba(255,255,255,.14);background:#00E582;color:#141D26">{{ tab.label }}</button>
+          <button type="button" role="tab" aria-selected="true" aria-controls="past-activities" onClick="{{ tab.select }}" style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;padding:15px 26px;cursor:pointer;border:0;border-right:1px solid rgba(255,255,255,.14);background:#00E582;color:#141D26">{{ tab.label }}</button>
         </sc-if>
         <sc-if value="{{ tab.inactive }}" hint-placeholder-val="{{ false }}">
-          <button type="button" onClick="{{ tab.select }}" style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;padding:15px 26px;cursor:pointer;border:0;border-right:1px solid rgba(255,255,255,.14);background:transparent;color:#98A3AE;transition:color .18s ease" style-hover="color:#00E582">{{ tab.label }}</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="past-activities" onClick="{{ tab.select }}" style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;padding:15px 26px;cursor:pointer;border:0;border-right:1px solid rgba(255,255,255,.14);background:transparent;color:#98A3AE;transition:color .18s ease" style-hover="color:#00E582">{{ tab.label }}</button>
         </sc-if>
       </sc-for>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px" data-past-grid>
+    <div id="past-activities" role="tabpanel" aria-live="polite" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px" data-past-grid>
       <sc-for list="{{ activities }}" as="item" hint-placeholder-count="3">
         <article style="display:flex;flex-direction:column;background:#18222C;border:1px solid rgba(255,255,255,.14);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#00E582;transform:translateY(-3px)">
           <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#1E2A35;border-bottom:1px solid rgba(255,255,255,.14)">
@@ -312,16 +330,16 @@ a:hover{color:#5CFFB4}
 </section>
 
 <section id="faq" style="border-bottom:1px solid rgba(255,255,255,.14)">
-  <div style="max-width:1720px;margin:0 auto;padding:130px 56px;display:grid;grid-template-columns:320px 1fr;gap:88px" data-section-grid>
+  <div style="max-width:1720px;margin:0 auto;padding:130px 56px;display:grid;grid-template-columns:320px 1fr;gap:88px" data-section-grid data-page-shell data-section-shell>
     <div style="display:flex;flex-direction:column;gap:18px" data-reveal>
-      <span style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:96px;line-height:.85;letter-spacing:-.05em;font-weight:700;color:rgba(255,255,255,.14)">05</span>
+      <span aria-hidden="true" style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:96px;line-height:.85;letter-spacing:-.05em;font-weight:700;color:rgba(255,255,255,.4)">05</span>
       <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:#00E582">FAQ</span>
       <h2 style="margin:0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:34px;letter-spacing:-.03em;font-weight:700;text-wrap:pretty">자주 들어오는 질문</h2>
     </div>
     <div style="display:flex;flex-direction:column;max-width:1240px;border-top:1px solid rgba(255,255,255,.14)">
       <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="6">
         <div style="border-bottom:1px solid rgba(255,255,255,.14)">
-          <button type="button" onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;background:none;border:0;padding:28px 8px;cursor:pointer;text-align:left;color:#fff;font-family:inherit;font-size:18px;font-weight:700;letter-spacing:-.02em">
+          <button id="{{ q.buttonId }}" type="button" aria-expanded="{{ q.open }}" aria-controls="{{ q.answerId }}" onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;background:none;border:0;padding:28px 8px;cursor:pointer;text-align:left;color:#fff;font-family:inherit;font-size:18px;font-weight:700;letter-spacing:-.02em">
             {{ q.question }}
             <span style="flex:none;position:relative;display:block;width:16px;height:16px">
               <span style="position:absolute;top:6px;left:0;width:16px;height:3px;background:#00E582"></span>
@@ -331,7 +349,7 @@ a:hover{color:#5CFFB4}
             </span>
           </button>
           <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
-            <p style="margin:0;padding:0 8px 30px;font-size:15px;line-height:1.85;color:#A9B4BF;max-width:720px;animation:fadeUp .3s ease both">{{ q.answer }}</p>
+            <p id="{{ q.answerId }}" role="region" aria-labelledby="{{ q.buttonId }}" style="margin:0;padding:0 8px 30px;font-size:15px;line-height:1.85;color:#A9B4BF;max-width:720px;animation:fadeUp .3s ease both">{{ q.answer }}</p>
           </sc-if>
         </div>
       </sc-for>
@@ -343,14 +361,14 @@ a:hover{color:#5CFFB4}
 
 <footer style="position:relative;background:#111921;overflow:hidden">
   <div data-corner style="position:absolute;top:0;right:0;width:200px;height:56px;background:#00E582"></div>
-  <div style="position:relative;max-width:1720px;margin:0 auto;padding:96px 56px;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:start" data-footer-grid>
+  <div style="position:relative;max-width:1720px;margin:0 auto;padding:96px 56px;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:start" data-footer-grid data-page-shell data-footer-shell>
     <div style="display:flex;flex-direction:column;gap:24px;max-width:560px">
       <img src="assets/brandmark-white.svg" alt="AWS Student Builder Group" style="height:52px;width:auto;align-self:flex-start">
       <p style="margin:0;font-size:15px;line-height:1.8;color:#8B96A2">광운대학교에서 운영되는 AWS Student Builder Group입니다.</p>
       <a href="https://instagram.com/aws.sbg.kwu" target="_blank" rel="noopener" style="align-self:flex-start;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:#C9D1D9;border:1px solid rgba(255,255,255,.2);padding:12px 16px;transition:color .18s ease,border-color .18s ease" style-hover="color:#00E582;border-color:#00E582">@aws.sbg.kwu</a>
     </div>
     <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
-      <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#5E6874">© 2026 AWS STUDENT BUILDER GROUP · KWANGWOON UNIV.</span>
+      <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#8B96A2">© 2026 AWS STUDENT BUILDER GROUP · KWANGWOON UNIV.</span>
     </div>
   </div>
 </footer>
@@ -450,15 +468,37 @@ class Component extends DCLogic {
       const open = !!this.state.open[i];
       return {
         question, answer, open, closed: !open,
+        buttonId:'faq-button-' + i,
+        answerId:'faq-answer-' + i,
         toggle: () => this.setState(s => ({ open: Object.assign({}, s.open, { [i]: !s.open[i] }) }))
       };
     });
+
+    const toggleMenu = () => {
+      const menuOpen = !this.state.menuOpen;
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+      [document.querySelector('#main-content'), document.querySelector('footer')].forEach(element => {
+        if (!element) return;
+        if (menuOpen) {
+          element.setAttribute('inert', '');
+          element.setAttribute('aria-hidden', 'true');
+        } else {
+          element.removeAttribute('inert');
+          element.removeAttribute('aria-hidden');
+        }
+      });
+      this.setState({ menuOpen });
+      setTimeout(() => {
+        const target = menuOpen ? document.querySelector('#mobile-menu button') : document.querySelector('[data-menu-btn]');
+        if (target) target.focus();
+      }, 0);
+    };
 
     return {
       recruitLabel: cohort + 'TH RECRUITING — 모집중',
       cohortKo: cohort + '기',
       menuOpen: this.state.menuOpen,
-      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      toggleMenu,
       steps, calendarEvents, tabs, activities, faqs
     };
   }
