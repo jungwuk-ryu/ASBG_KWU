@@ -244,7 +244,6 @@ a:hover{color:#5CFFB4}
           <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#00E582">2026 FALL · COHORT 5</span>
           <h3 style="margin:0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:34px;letter-spacing:-.03em">5기 캘린더</h3>
         </div>
-        <p style="margin:0;max-width:520px;font-size:14px;line-height:1.7;color:#7C8894">모집 일정은 모두 한국 시간 기준입니다. 정규 세션 일정은 선발 이후 이 캘린더를 통해 안내합니다.</p>
       </div>
       <div data-calendar-months style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
         <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
@@ -268,7 +267,7 @@ a:hover{color:#5CFFB4}
             <tbody>
               <tr><td data-empty></td><td data-empty></td><td data-application><time datetime="2026-09-01">1</time></td><td data-application><time datetime="2026-09-02">2</time></td><td data-application><time datetime="2026-09-03">3</time></td><td data-application><time datetime="2026-09-04">4</time></td><td data-application><time datetime="2026-09-05">5</time></td></tr>
               <tr><td data-application data-event title="서류 접수 마감"><time datetime="2026-09-06">6</time><span data-calendar-event-label>접수 마감</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="서류 결과 안내"><time datetime="2026-09-07">7</time><span data-calendar-event-label>서류 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-08">8</time></td><td data-event title="인터뷰 시작"><time datetime="2026-09-09">9</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="인터뷰 진행"><time datetime="2026-09-10">10</time></td><td data-event title="인터뷰 종료"><time datetime="2026-09-11">11</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-12">12</time></td></tr>
-              <tr><td><time datetime="2026-09-13">13</time></td><td><time datetime="2026-09-14">14</time></td><td data-event title="최종 결과 안내"><time datetime="2026-09-15">15</time><span data-calendar-event-label>최종 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-16">16</time></td><td><time datetime="2026-09-17">17</time></td><td data-welcome title="Welcome Party"><time datetime="2026-09-18">18</time><span data-calendar-event-label>Welcome</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-19">19</time></td></tr>
+              <tr><td><time datetime="2026-09-13">13</time></td><td><time datetime="2026-09-14">14</time></td><td data-event title="최종 결과 안내"><time datetime="2026-09-15">15</time><span data-calendar-event-label>최종 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-16">16</time></td><td><time datetime="2026-09-17">17</time></td><td data-welcome title="Welcome Party"><time datetime="2026-09-18">18</time><span data-calendar-event-label>Welcome Party</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-19">19</time></td></tr>
               <tr><td><time datetime="2026-09-20">20</time></td><td><time datetime="2026-09-21">21</time></td><td><time datetime="2026-09-22">22</time></td><td><time datetime="2026-09-23">23</time></td><td><time datetime="2026-09-24">24</time></td><td><time datetime="2026-09-25">25</time></td><td><time datetime="2026-09-26">26</time></td></tr>
               <tr><td><time datetime="2026-09-27">27</time></td><td><time datetime="2026-09-28">28</time></td><td><time datetime="2026-09-29">29</time></td><td><time datetime="2026-09-30">30</time></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
               <tr><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
@@ -409,7 +408,7 @@ const ACCENT = '#00E582';
 const PAST = {
   '4기': [
     { cat:'세션', title:'RAG와 서버리스 입문 핸즈온', desc:'RAG와 서버리스 아키텍처를 주제로, 설명을 듣고 직접 따라 만드는 입문 핸즈온을 진행했습니다.', photo:'assets/photos/4-hands-on.jpg', alt:'강의실 앞에서 RAG와 서버리스 입문 핸즈온을 발표하는 4기 멤버', position:'center 44%' },
-    { cat:'커뮤니티', title:'4기 첫 단체 사진', desc:'Introductory Hands-On을 마친 뒤 한자리에 모였습니다. 함께 배우고 만들 한 학기의 출발을 기록했습니다.', photo:'assets/photos/4-group.jpg', alt:'Introductory Hands-On 화면 앞에 모인 ASBG KWU 4기 멤버들', position:'center 52%' }
+    { cat:'커뮤니티', title:'4기 단체 사진', desc:'Introductory Hands-On을 마친 뒤 한자리에 모였습니다. 함께 배우고 만들 한 학기의 출발을 기록했습니다.', photo:'assets/photos/4-group.jpg', alt:'Introductory Hands-On 화면 앞에 모인 ASBG KWU 4기 멤버들', position:'center 52%' }
   ],
   '3기': [
     { cat:'세션', title:'서버리스 아키텍처 핸즈온', desc:'서버를 직접 관리하지 않고 서비스를 구성하는 방법을 배우고, Lambda를 중심으로 한 서버리스 아키텍처를 함께 살펴봤습니다.', photo:'assets/photos/3-serverless.jpg', alt:'강의실에서 서버리스 아키텍처를 발표하는 3기 멤버', position:'center 46%' },
@@ -419,7 +418,7 @@ const PAST = {
   '2기': [
     { cat:'세션', title:'AWS 실습 핸즈온', desc:'강의실에 모여 설명을 듣고, 각자의 노트북으로 AWS 환경을 직접 구성하며 실습했습니다.', photo:'assets/photos/2-hands-on.jpg', alt:'강의실에서 노트북으로 AWS 실습에 참여하는 2기 멤버들', position:'center center' },
     { cat:'스터디', title:'함께 공부한 그룹 스터디', desc:'작은 팀으로 모여 각자의 진도를 공유하고, 막힌 부분을 함께 풀어 가며 공부했습니다.', photo:'assets/photos/2-group-study.jpg', alt:'노트북을 펼쳐 놓고 함께 공부하는 2기 그룹 스터디 멤버들', position:'center center' },
-    { cat:'커뮤니티', title:'2기의 첫 단체 사진', desc:'Welcome 세션을 마친 뒤 한자리에 모였습니다. 함께 시작한 2기의 첫 순간을 기록했습니다.', photo:'assets/photos/2-group.jpg', alt:'Welcome to the AWS Cloud Clubs 화면 앞에 모인 2기 멤버들', position:'center center' }
+    { cat:'커뮤니티', title:'2기 단체 사진', desc:'Welcome 세션을 마친 뒤 한자리에 모였습니다. 함께 시작한 2기의 첫 순간을 기록했습니다.', photo:'assets/photos/2-group.jpg', alt:'Welcome to the AWS Cloud Clubs 화면 앞에 모인 2기 멤버들', position:'center center' }
   ],
   '1기': [
     { cat:'세션', title:'1기 AWS 실습 세션', desc:'AWS Cloud Club으로 출발한 첫 기수는 강의실에 모여 발표와 실습을 오가며 클라우드의 기본을 함께 익혔습니다.', photo:'assets/photos/1-activity.jpg', alt:'강의실에서 발표와 AWS 실습에 참여하는 1기 멤버들의 활동 모음', position:'center 47%' }
@@ -427,12 +426,12 @@ const PAST = {
 };
 
 const FAQS = [
-  ['리크루팅 선발기준','지금 무엇을 할 줄 아는지보다, 무엇을 만들어 보고 싶은지를 봅니다. 지원서에서는 관심 분야와 활동 계획을, 인터뷰에서는 함께 한 학기를 보낼 수 있을지를 확인합니다. 또한 AWS 및 클라우드 경험이 없어도 활동할 수 있어요! 하지만 클라우드 및 개발에 대한 관심과 열정은 반드시 필요해요.'],
-  ['중복 제출 가능여부','중복 제출 시 가장 마지막에 제출된 지원서를 기준으로 검토합니다. 수정이 필요하면 새로 제출해 주세요. 별도 연락은 필요하지 않습니다.'],
-  ['활동','정규 세션은 중간고사 전에 핸즈온 3회, 기말고사 전에 핸즈온 3회 진행합니다. 정확한 요일은 위 캘린더를 확인해주세요!'],
-  ['다른 대외 병행 가능 여부','신규 멤버는 정규 세션 참석이 기본이고, 나머지는 본인이 선택하는 만큼입니다. 실제로 많은 멤버가 인턴, 학회, 취업 준비와 병행하고 있습니다.'],
-  ['수료증','활동이 모두 종료된 뒤, 교내 활동의 참여율을 바탕으로 일정 기준을 만족하는 멤버분들에게 한하여 AWS Student Builder Group 수료증을 발급하고 있습니다. 구체적인 수료 조건은 선발 이후 안내드릴 예정입니다.'],
-  ['운영진','ASBG KWU 5기 운영진은 리더 1명과 코어팀 5명으로 구성되어 있습니다. 총 6명의 광운대학생이 이벤트 기획과 운영을 담당하고 있으며, 리더는 AWS로부터 지원을 받아오고 있어요. 1년을 임기로 하여 매년 같이할 코어팀을 모집하고 있으니 참고 부탁드립니다. (26년 5월 모집 마감)']
+  ['리크루팅 과정에서의 구체적인 선발기준이 궁금해요.','지금 무엇을 할 줄 아는지보다, 무엇을 만들어 보고 싶은지를 봅니다. 지원서에서는 관심 분야와 활동 계획을, 인터뷰에서는 함께 한 학기를 보낼 수 있을지를 확인합니다. 또한 AWS 및 클라우드 경험이 없어도 활동할 수 있어요! 하지만 클라우드 및 개발에 대한 관심과 열정은 반드시 필요해요.'],
+  ['제출한 지원서를 수정하고싶어요 / 지원서를 중복으로 신청했는데 괜찮을까요?','중복 제출 시 가장 마지막에 제출된 지원서를 기준으로 검토합니다. 수정이 필요하면 새로 제출해 주세요. 별도 연락은 필요하지 않습니다.'],
+  ['활동은 주로 어느 요일, 몇시 쯤, 어디에서 진행하나요?','정규 세션은 중간고사 전에 핸즈온 3회, 기말고사 전에 핸즈온 3회 진행합니다. 정확한 요일은 위 캘린더를 확인해주세요!'],
+  ['다른 대외활동이나 취업 등을 고려중인데 활동 참여로 많이 바쁘고 힘들어질까 고민입니다. 클럽활동에 얼만큼의 시간과 에너지를 쓰게 되나요?','신규 멤버는 정규 세션 참석이 기본이고, 나머지는 본인이 선택하는 만큼입니다. 실제로 많은 멤버가 인턴, 학회, 취업 준비와 병행하고 있습니다.'],
+  ['클럽 활동에 대한 수료증 혹은 인증서를 받을 수 있을까요?','활동이 모두 종료된 뒤, 교내 활동의 참여율을 바탕으로 일정 기준을 만족하는 멤버분들에게 한하여 AWS Student Builder Group 수료증을 발급하고 있습니다. 구체적인 수료 조건은 선발 이후 안내드릴 예정입니다.'],
+  ['ASBG KWU 5기 운영진이 궁금해요.','ASBG KWU 5기 운영진은 리더 1명과 코어팀 5명으로 구성되어 있습니다. 총 6명의 광운대학생이 이벤트 기획과 운영을 담당하고 있으며, 리더는 AWS로부터 지원을 받아오고 있어요. 1년을 임기로 하여 매년 같이할 코어팀을 모집하고 있으니 참고 부탁드립니다. (26년 5월 모집 마감)']
 ];
 
 class Component extends DCLogic {
