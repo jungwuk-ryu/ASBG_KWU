@@ -394,7 +394,7 @@ a:hover{color:#5CFFB4}
           </table>
         </article>
       </div>
-      <div data-calendar-events style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
+      <div data-calendar-events style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:20px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
         <sc-for list="{{ calendarEvents }}" as="event" hint-placeholder-count="5">
           <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)">
             <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;color:#00E582">{{ event.date }}</span>
