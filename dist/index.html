@@ -49,7 +49,7 @@
 html{scroll-behavior:smooth;background:#141D26}
 body{margin:0;background:#141D26;color:#fff;font-family:'Pretendard Variable',Pretendard,'Amazon Ember Display',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
-section[id],header[id],[id="calendar"]{scroll-margin-top:84px}
+section[id],header[id]{scroll-margin-top:84px}
 a{color:#00E582;text-decoration:none}
 a:hover{color:#5CFFB4}
 :focus-visible{outline:3px solid #00E582;outline-offset:4px}
@@ -100,9 +100,14 @@ a:hover{color:#5CFFB4}
  [data-recruit-step]{grid-template-columns:52px minmax(0,1fr) !important;gap:8px 16px !important;padding:22px 0 !important}
  [data-recruit-step] [data-step-name]{font-size:18px !important}
  [data-recruit-step] [data-step-date]{grid-column:2;white-space:normal !important}
+ [data-recruit-actions]{width:100%}
+ [data-recruit-actions] > *{flex:1 1 220px;justify-content:center}
  [data-calendar-table] td{height:58px !important;padding:6px !important}
  [data-calendar-event-label]{display:none !important}
  [data-calendar-events]{grid-template-columns:1fr !important}
+ [data-calendar-dialog]{width:100% !important;max-height:calc(100dvh - 24px) !important}
+ [data-calendar-dialog-header]{padding:20px 18px !important;gap:14px !important}
+ [data-calendar-dialog-body]{padding:24px 18px !important}
  [data-cards-3] > div{border-right:0 !important;border-bottom:1px solid rgba(255,255,255,.14)}
  [data-cards-3] > div:last-child{border-bottom:0}
  [data-past-tabs]{width:100%}
@@ -131,7 +136,7 @@ a:hover{color:#5CFFB4}
       <span style="display:flex;align-items:center;gap:32px" data-nav-links>
         <a href="#about" style="color:#C9D1D9;font-size:14px;font-weight:600">소개</a>
         <a href="#recruiting" style="color:#C9D1D9;font-size:14px;font-weight:600">모집</a>
-        <a href="#calendar" style="color:#C9D1D9;font-size:14px;font-weight:600">캘린더</a>
+        <button type="button" onClick="{{ openCalendar }}" style="padding:0;background:none;border:0;color:#C9D1D9;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">캘린더</button>
         <a href="#future" style="color:#C9D1D9;font-size:14px;font-weight:600">활동</a>
         <a href="#past" style="color:#C9D1D9;font-size:14px;font-weight:600">지난 기수</a>
         <a href="#faq" style="color:#C9D1D9;font-size:14px;font-weight:600">FAQ</a>
@@ -153,7 +158,7 @@ a:hover{color:#5CFFB4}
     <button type="button" onClick="{{ toggleMenu }}" aria-label="메뉴 닫기" style="align-self:flex-end;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;width:46px;height:46px;font-size:18px;cursor:pointer">×</button>
     <a href="#about" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">소개</a>
     <a href="#recruiting" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">모집</a>
-    <a href="#calendar" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">캘린더</a>
+    <button type="button" onClick="{{ openCalendar }}" style="padding:14px 0;background:none;border:0;color:#fff;font-family:inherit;font-size:30px;font-weight:700;text-align:left;cursor:pointer">캘린더</button>
     <a href="#future" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">활동</a>
     <a href="#past" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">지난 기수</a>
     <a href="#faq" onClick="{{ toggleMenu }}" style="color:#fff;font-size:30px;font-weight:700;padding:14px 0">FAQ</a>
@@ -238,52 +243,12 @@ a:hover{color:#5CFFB4}
           <span data-step-date style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:15px;color:#A9B4BF;white-space:nowrap">{{ step.date }}</span>
         </div>
       </sc-for>
-      <a href="https://tally.so/r/dWGWJr" target="_blank" rel="noopener" style="align-self:flex-start;margin-top:44px;background:#00E582;color:#141D26;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-weight:700;font-size:16px;padding:18px 32px;transition:background .18s ease" style-hover="background:#5CFFB4">지원서 작성하기 →</a>
-    </div>
-    <div id="calendar" style="grid-column:1/-1;scroll-margin-top:104px;margin-top:48px;padding-top:48px;border-top:1px solid rgba(255,255,255,.14);display:flex;flex-direction:column;gap:32px">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap" data-reveal>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#00E582">2026 FALL · COHORT 5</span>
-          <h3 style="margin:0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:34px;letter-spacing:-.03em">5기 캘린더</h3>
-        </div>
-      </div>
-      <div data-calendar-months style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
-        <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
-          <h4 style="margin:0;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:22px;letter-spacing:-.02em">2026. 08</h4>
-          <table data-calendar-table style="width:100%;border-collapse:collapse;table-layout:fixed" aria-label="2026년 8월 주요 일정">
-            <thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead>
-            <tbody>
-              <tr><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td><time datetime="2026-08-01">1</time></td></tr>
-              <tr><td><time datetime="2026-08-02">2</time></td><td><time datetime="2026-08-03">3</time></td><td><time datetime="2026-08-04">4</time></td><td><time datetime="2026-08-05">5</time></td><td><time datetime="2026-08-06">6</time></td><td><time datetime="2026-08-07">7</time></td><td><time datetime="2026-08-08">8</time></td></tr>
-              <tr><td><time datetime="2026-08-09">9</time></td><td><time datetime="2026-08-10">10</time></td><td><time datetime="2026-08-11">11</time></td><td><time datetime="2026-08-12">12</time></td><td><time datetime="2026-08-13">13</time></td><td><time datetime="2026-08-14">14</time></td><td><time datetime="2026-08-15">15</time></td></tr>
-              <tr><td><time datetime="2026-08-16">16</time></td><td><time datetime="2026-08-17">17</time></td><td><time datetime="2026-08-18">18</time></td><td><time datetime="2026-08-19">19</time></td><td><time datetime="2026-08-20">20</time></td><td data-application data-event title="서류 접수 시작"><time datetime="2026-08-21">21</time><span data-calendar-event-label>접수 시작</span><span data-calendar-dot aria-hidden="true"></span></td><td data-application><time datetime="2026-08-22">22</time></td></tr>
-              <tr><td data-application><time datetime="2026-08-23">23</time></td><td data-application><time datetime="2026-08-24">24</time></td><td data-application><time datetime="2026-08-25">25</time></td><td data-application><time datetime="2026-08-26">26</time></td><td data-application><time datetime="2026-08-27">27</time></td><td data-application><time datetime="2026-08-28">28</time></td><td data-application><time datetime="2026-08-29">29</time></td></tr>
-              <tr><td data-application><time datetime="2026-08-30">30</time></td><td data-application><time datetime="2026-08-31">31</time></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
-            </tbody>
-          </table>
-        </article>
-        <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
-          <h4 style="margin:0;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:22px;letter-spacing:-.02em">2026. 09</h4>
-          <table data-calendar-table style="width:100%;border-collapse:collapse;table-layout:fixed" aria-label="2026년 9월 주요 일정">
-            <thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead>
-            <tbody>
-              <tr><td data-empty></td><td data-empty></td><td data-application><time datetime="2026-09-01">1</time></td><td data-application><time datetime="2026-09-02">2</time></td><td data-application><time datetime="2026-09-03">3</time></td><td data-application><time datetime="2026-09-04">4</time></td><td data-application><time datetime="2026-09-05">5</time></td></tr>
-              <tr><td data-application data-event title="서류 접수 마감"><time datetime="2026-09-06">6</time><span data-calendar-event-label>접수 마감</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="서류 결과 안내"><time datetime="2026-09-07">7</time><span data-calendar-event-label>서류 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-08">8</time></td><td data-event title="인터뷰 시작"><time datetime="2026-09-09">9</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="인터뷰 진행"><time datetime="2026-09-10">10</time></td><td data-event title="인터뷰 종료"><time datetime="2026-09-11">11</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-12">12</time></td></tr>
-              <tr><td><time datetime="2026-09-13">13</time></td><td><time datetime="2026-09-14">14</time></td><td data-event title="최종 결과 안내"><time datetime="2026-09-15">15</time><span data-calendar-event-label>최종 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-16">16</time></td><td><time datetime="2026-09-17">17</time></td><td data-welcome title="Welcome Party"><time datetime="2026-09-18">18</time><span data-calendar-event-label>Welcome Party</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-19">19</time></td></tr>
-              <tr><td><time datetime="2026-09-20">20</time></td><td><time datetime="2026-09-21">21</time></td><td><time datetime="2026-09-22">22</time></td><td><time datetime="2026-09-23">23</time></td><td><time datetime="2026-09-24">24</time></td><td><time datetime="2026-09-25">25</time></td><td><time datetime="2026-09-26">26</time></td></tr>
-              <tr><td><time datetime="2026-09-27">27</time></td><td><time datetime="2026-09-28">28</time></td><td><time datetime="2026-09-29">29</time></td><td><time datetime="2026-09-30">30</time></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
-              <tr><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
-            </tbody>
-          </table>
-        </article>
-      </div>
-      <div data-calendar-events style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
-        <sc-for list="{{ calendarEvents }}" as="event" hint-placeholder-count="5">
-          <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)">
-            <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;color:#00E582">{{ event.date }}</span>
-            <strong style="font-size:14px;line-height:1.4">{{ event.name }}</strong>
-          </div>
-        </sc-for>
+      <div data-recruit-actions style="align-self:flex-start;display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;margin-top:44px">
+        <a href="https://tally.so/r/dWGWJr" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-width:190px;background:#00E582;color:#141D26;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-weight:700;font-size:16px;padding:18px 32px;transition:background .18s ease" style-hover="background:#5CFFB4">지원서 작성하기 →</a>
+        <button type="button" onClick="{{ openCalendar }}" data-calendar-trigger style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:190px;background:transparent;border:1px solid rgba(255,255,255,.42);color:#fff;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-weight:700;font-size:16px;padding:18px 32px;cursor:pointer;transition:border-color .18s ease,color .18s ease,background .18s ease" style-hover="border-color:#00E582;color:#00E582;background:rgba(0,229,130,.08)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="1.5"></rect><path d="M8 2.5v4M16 2.5v4M3 10h18"></path></svg>
+          <span>캘린더 보기</span>
+        </button>
       </div>
     </div>
   </div>
@@ -388,6 +353,59 @@ a:hover{color:#5CFFB4}
 
 </main>
 
+<div data-calendar-modal aria-hidden="{{ calendarClosed }}" style="position:fixed;inset:0;z-index:70;display:{{ calendarDisplay }};align-items:center;justify-content:center;padding:40px 24px">
+  <div aria-hidden="true" onClick="{{ closeCalendar }}" style="position:absolute;z-index:0;inset:0;background:rgba(6,12,17,.78);backdrop-filter:blur(6px);cursor:pointer"></div>
+  <div id="calendar-dialog" role="dialog" aria-modal="true" aria-labelledby="calendar-title" onKeyDown="{{ closeCalendarOnEscape }}" data-calendar-dialog style="position:relative;z-index:1;width:min(1180px,100%);max-height:calc(100dvh - 80px);overflow:hidden;background:#141D26;border:1px solid rgba(255,255,255,.24);box-shadow:0 24px 80px rgba(0,0,0,.48);display:flex;flex-direction:column">
+    <div data-calendar-dialog-header style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:28px 32px;border-bottom:1px solid rgba(255,255,255,.14)">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#00E582">2026 FALL · COHORT 5</span>
+        <h3 id="calendar-title" style="margin:0;font-family:'Amazon Ember Display','Pretendard Variable',sans-serif;font-size:34px;letter-spacing:-.03em">5기 캘린더</h3>
+      </div>
+      <button type="button" onClick="{{ closeCalendar }}" data-calendar-close aria-label="캘린더 닫기" style="flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-size:14px;font-weight:700;padding:12px 15px;cursor:pointer;transition:border-color .18s ease,color .18s ease" style-hover="border-color:#00E582;color:#00E582"><span aria-hidden="true" style="font-size:21px;line-height:.7">×</span><span>닫기</span></button>
+    </div>
+    <div data-calendar-dialog-body style="overflow-y:auto;padding:28px 32px 32px">
+      <div data-calendar-months style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+        <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
+          <h4 style="margin:0;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:22px;letter-spacing:-.02em">2026. 08</h4>
+          <table data-calendar-table style="width:100%;border-collapse:collapse;table-layout:fixed" aria-label="2026년 8월 주요 일정">
+            <thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead>
+            <tbody>
+              <tr><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td><time datetime="2026-08-01">1</time></td></tr>
+              <tr><td><time datetime="2026-08-02">2</time></td><td><time datetime="2026-08-03">3</time></td><td><time datetime="2026-08-04">4</time></td><td><time datetime="2026-08-05">5</time></td><td><time datetime="2026-08-06">6</time></td><td><time datetime="2026-08-07">7</time></td><td><time datetime="2026-08-08">8</time></td></tr>
+              <tr><td><time datetime="2026-08-09">9</time></td><td><time datetime="2026-08-10">10</time></td><td><time datetime="2026-08-11">11</time></td><td><time datetime="2026-08-12">12</time></td><td><time datetime="2026-08-13">13</time></td><td><time datetime="2026-08-14">14</time></td><td><time datetime="2026-08-15">15</time></td></tr>
+              <tr><td><time datetime="2026-08-16">16</time></td><td><time datetime="2026-08-17">17</time></td><td><time datetime="2026-08-18">18</time></td><td><time datetime="2026-08-19">19</time></td><td><time datetime="2026-08-20">20</time></td><td data-application data-event title="서류 접수 시작"><time datetime="2026-08-21">21</time><span data-calendar-event-label>접수 시작</span><span data-calendar-dot aria-hidden="true"></span></td><td data-application><time datetime="2026-08-22">22</time></td></tr>
+              <tr><td data-application><time datetime="2026-08-23">23</time></td><td data-application><time datetime="2026-08-24">24</time></td><td data-application><time datetime="2026-08-25">25</time></td><td data-application><time datetime="2026-08-26">26</time></td><td data-application><time datetime="2026-08-27">27</time></td><td data-application><time datetime="2026-08-28">28</time></td><td data-application><time datetime="2026-08-29">29</time></td></tr>
+              <tr><td data-application><time datetime="2026-08-30">30</time></td><td data-application><time datetime="2026-08-31">31</time></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
+            </tbody>
+          </table>
+        </article>
+        <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
+          <h4 style="margin:0;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:22px;letter-spacing:-.02em">2026. 09</h4>
+          <table data-calendar-table style="width:100%;border-collapse:collapse;table-layout:fixed" aria-label="2026년 9월 주요 일정">
+            <thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead>
+            <tbody>
+              <tr><td data-empty></td><td data-empty></td><td data-application><time datetime="2026-09-01">1</time></td><td data-application><time datetime="2026-09-02">2</time></td><td data-application><time datetime="2026-09-03">3</time></td><td data-application><time datetime="2026-09-04">4</time></td><td data-application><time datetime="2026-09-05">5</time></td></tr>
+              <tr><td data-application data-event title="서류 접수 마감"><time datetime="2026-09-06">6</time><span data-calendar-event-label>접수 마감</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="서류 결과 안내"><time datetime="2026-09-07">7</time><span data-calendar-event-label>서류 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-08">8</time></td><td data-event title="인터뷰 시작"><time datetime="2026-09-09">9</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="인터뷰 진행"><time datetime="2026-09-10">10</time></td><td data-event title="인터뷰 종료"><time datetime="2026-09-11">11</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-12">12</time></td></tr>
+              <tr><td><time datetime="2026-09-13">13</time></td><td><time datetime="2026-09-14">14</time></td><td data-event title="최종 결과 안내"><time datetime="2026-09-15">15</time><span data-calendar-event-label>최종 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-16">16</time></td><td><time datetime="2026-09-17">17</time></td><td data-welcome title="Welcome Party"><time datetime="2026-09-18">18</time><span data-calendar-event-label>Welcome Party</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-19">19</time></td></tr>
+              <tr><td><time datetime="2026-09-20">20</time></td><td><time datetime="2026-09-21">21</time></td><td><time datetime="2026-09-22">22</time></td><td><time datetime="2026-09-23">23</time></td><td><time datetime="2026-09-24">24</time></td><td><time datetime="2026-09-25">25</time></td><td><time datetime="2026-09-26">26</time></td></tr>
+              <tr><td><time datetime="2026-09-27">27</time></td><td><time datetime="2026-09-28">28</time></td><td><time datetime="2026-09-29">29</time></td><td><time datetime="2026-09-30">30</time></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
+              <tr><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+      <div data-calendar-events style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
+        <sc-for list="{{ calendarEvents }}" as="event" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)">
+            <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;color:#00E582">{{ event.date }}</span>
+            <strong style="font-size:14px;line-height:1.4">{{ event.name }}</strong>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer style="position:relative;background:#111921;overflow:hidden">
   <div data-corner style="position:absolute;top:0;right:0;width:200px;height:56px;background:#00E582"></div>
   <div style="position:relative;max-width:1720px;margin:0 auto;padding:96px 56px;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:start" data-footer-grid data-page-shell data-footer-shell>
@@ -437,7 +455,7 @@ const FAQS = [
 ];
 
 class Component extends DCLogic {
-  state = { menuOpen: false, tab: '4기', open: {} };
+  state = { menuOpen: false, calendarOpen: false, tab: '4기', open: {} };
 
   renderVals() {
     const cohort = this.props.cohort ?? 5;
@@ -502,12 +520,12 @@ class Component extends DCLogic {
       };
     });
 
-    const toggleMenu = () => {
-      const menuOpen = !this.state.menuOpen;
-      document.body.style.overflow = menuOpen ? 'hidden' : '';
-      [document.querySelector('#main-content'), document.querySelector('footer')].forEach(element => {
+    const syncOverlayState = (menuOpen, calendarOpen) => {
+      const overlayOpen = menuOpen || calendarOpen;
+      document.body.style.overflow = overlayOpen ? 'hidden' : '';
+      [document.querySelector('nav'), document.querySelector('#main-content'), document.querySelector('footer')].forEach(element => {
         if (!element) return;
-        if (menuOpen) {
+        if (overlayOpen) {
           element.setAttribute('inert', '');
           element.setAttribute('aria-hidden', 'true');
         } else {
@@ -515,6 +533,11 @@ class Component extends DCLogic {
           element.removeAttribute('aria-hidden');
         }
       });
+    };
+
+    const toggleMenu = () => {
+      const menuOpen = !this.state.menuOpen;
+      syncOverlayState(menuOpen, this.state.calendarOpen);
       this.setState({ menuOpen });
       setTimeout(() => {
         const target = menuOpen ? document.querySelector('#mobile-menu button') : document.querySelector('[data-menu-btn]');
@@ -522,11 +545,38 @@ class Component extends DCLogic {
       }, 0);
     };
 
+    const openCalendar = () => {
+      syncOverlayState(false, true);
+      this.setState({ menuOpen: false, calendarOpen: true });
+      setTimeout(() => {
+        const closeButton = document.querySelector('[data-calendar-close]');
+        if (closeButton) closeButton.focus();
+      }, 0);
+    };
+
+    const closeCalendar = () => {
+      this.setState(() => ({ menuOpen: false, calendarOpen: false }), () => {
+        syncOverlayState(false, false);
+        const trigger = document.querySelector('[data-calendar-trigger]');
+        if (trigger) trigger.focus();
+      });
+    };
+
+    const closeCalendarOnEscape = event => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      closeCalendar();
+    };
+
     return {
       recruitLabel: cohort + 'TH RECRUITING — 모집중',
       cohortKo: cohort + '기',
       menuOpen: this.state.menuOpen,
+      calendarOpen: this.state.calendarOpen,
+      calendarClosed: !this.state.calendarOpen,
+      calendarDisplay: this.state.calendarOpen ? 'flex' : 'none',
       toggleMenu,
+      openCalendar, closeCalendar, closeCalendarOnEscape,
       steps, calendarEvents, tabs, activities, faqs
     };
   }
