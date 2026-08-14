@@ -333,7 +333,7 @@ a:hover{color:#5CFFB4}
     <div style="display:flex;flex-direction:column;max-width:1240px;border-top:1px solid rgba(255,255,255,.14)">
       <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="6">
         <div style="border-bottom:1px solid rgba(255,255,255,.14)">
-          <button id="{{ q.buttonId }}" type="button" aria-expanded="{{ q.open }}" aria-controls="{{ q.answerId }}" onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;background:none;border:0;padding:28px 8px;cursor:pointer;text-align:left;color:#fff;font-family:inherit;font-size:18px;font-weight:700;letter-spacing:-.02em">
+          <button id="{{ q.buttonId }}" type="button" aria-expanded="{{ q.open }}" aria-controls="{{ q.answerId }}" onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;background:none;border:0;padding:28px 8px;cursor:pointer;text-align:left;color:#fff;font-family:inherit;font-size:18px;font-weight:700;letter-spacing:-.02em;white-space:pre-line">
             {{ q.question }}
             <span style="flex:none;position:relative;display:block;width:16px;height:16px">
               <span style="position:absolute;top:6px;left:0;width:16px;height:3px;background:#00E582"></span>
@@ -449,7 +449,7 @@ const FAQS = [
   ['리크루팅 과정에서의 구체적인 선발기준이 궁금해요.','지금 무엇을 할 줄 아는지보다, 무엇을 만들어 보고 싶은지를 봅니다. 지원서에서는 관심 분야와 활동 계획을, 인터뷰에서는 함께 한 학기를 보낼 수 있을지를 확인합니다. 또한 AWS 및 클라우드 경험이 없어도 활동할 수 있어요! 하지만 클라우드 및 개발에 대한 관심과 열정은 반드시 필요해요.'],
   ['제출한 지원서를 수정하고싶어요 / 지원서를 중복으로 신청했는데 괜찮을까요?','중복 제출 시 가장 마지막에 제출된 지원서를 기준으로 검토합니다. 수정이 필요하면 새로 제출해 주세요. 별도 연락은 필요하지 않습니다.'],
   ['활동은 주로 어느 요일, 몇시 쯤, 어디에서 진행하나요?','정규 세션은 중간고사 전에 핸즈온 3회, 기말고사 전에 핸즈온 3회 진행합니다. 정확한 요일은 위 캘린더를 확인해주세요!'],
-  ['다른 대외활동이나 취업 등을 고려중인데 활동 참여로 많이 바쁘고 힘들어질까 고민입니다. 클럽활동에 얼만큼의 시간과 에너지를 쓰게 되나요?','신규 멤버는 정규 세션 참석이 기본이고, 나머지는 본인이 선택하는 만큼입니다. 실제로 많은 멤버가 인턴, 학회, 취업 준비와 병행하고 있습니다.'],
+  ['다른 대외활동이나 취업 등을 고려중인데 활동 참여로 많이 바쁘고 힘들어질까 고민입니다.\n클럽활동에 얼만큼의 시간과 에너지를 쓰게 되나요?','신규 멤버는 정규 세션 참석이 기본이고, 나머지는 본인이 선택하는 만큼입니다. 실제로 많은 멤버가 인턴, 학회, 취업 준비와 병행하고 있습니다.'],
   ['클럽 활동에 대한 수료증 혹은 인증서를 받을 수 있을까요?','활동이 모두 종료된 뒤, 교내 활동의 참여율을 바탕으로 일정 기준을 만족하는 멤버분들에게 한하여 AWS Student Builder Group 수료증을 발급하고 있습니다. 구체적인 수료 조건은 선발 이후 안내드릴 예정입니다.'],
   ['ASBG KWU 5기 운영진이 궁금해요.','ASBG KWU 5기 운영진은 리더 1명과 코어팀 5명으로 구성되어 있습니다. 총 6명의 광운대학생이 이벤트 기획과 운영을 담당하고 있으며, 리더는 AWS로부터 지원을 받아오고 있어요. 1년을 임기로 하여 매년 같이할 코어팀을 모집하고 있으니 참고 부탁드립니다. (26년 5월 모집 마감)']
 ];
