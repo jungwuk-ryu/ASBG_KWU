@@ -60,23 +60,15 @@ a:hover{color:#5CFFB4}
 [data-reveal]:nth-of-type(3){animation-delay:140ms}
 [data-reveal]:nth-of-type(4){animation-delay:210ms}
 [data-reveal]:nth-of-type(5){animation-delay:280ms}
-[data-calendar-table] th{padding:10px 4px;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;color:#7C8894;border-bottom:1px solid rgba(255,255,255,.14)}
-[data-calendar-table] td{height:82px;padding:9px;vertical-align:top;border:1px solid rgba(255,255,255,.08)}
-[data-calendar-table] td[data-empty]{background:rgba(255,255,255,.015)}
-[data-calendar-table] td[data-application]{background:rgba(0,229,130,.055)}
-[data-calendar-table] td[data-event]{background:rgba(0,229,130,.14)}
-[data-calendar-table] td[data-welcome]{background:rgba(0,229,130,.14)}
-[data-calendar-table] time{display:block;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:#C9D1D9}
-[data-calendar-table] td[data-application] time,[data-calendar-table] td[data-event] time{color:#00E582}
-[data-calendar-table] td[data-welcome] time{color:#00E582}
-[data-calendar-event-label]{display:block;margin-top:8px;font-size:10px;line-height:1.3;font-weight:700;color:#DDFBED}
-[data-calendar-table] td[data-welcome] [data-calendar-event-label]{color:#DDFBED}
-[data-calendar-dot]{display:block;width:5px;height:5px;margin-top:6px;background:#00E582}
-[data-calendar-table] td[data-welcome] [data-calendar-dot]{background:#00E582}
+[data-calendar-grid]{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)}
+[data-calendar-weekday]{padding:10px 4px;text-align:center;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;color:#7C8894;border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.14)}
+[data-calendar-day]{min-height:82px;padding:9px;border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+[data-calendar-day] time{display:block;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;font-weight:500}
+[data-calendar-day-label]{display:block;margin-top:8px;font-size:10px;line-height:1.3;font-weight:700;color:#DDFBED}
+[data-calendar-day-dot]{display:block;width:5px;height:5px;margin-top:6px}
 @media (max-width:960px){
  [data-hero-grid],[data-section-grid],[data-footer-grid]{grid-template-columns:1fr !important;gap:40px !important}
  [data-cards-3]{grid-template-columns:1fr !important}
- [data-calendar-months]{grid-template-columns:1fr !important}
  [data-nav-links]{display:none !important}
  [data-menu-btn]{display:flex !important;align-items:center;justify-content:center}
  nav > div{padding:0 20px !important;gap:12px !important}
@@ -102,8 +94,8 @@ a:hover{color:#5CFFB4}
  [data-recruit-step] [data-step-date]{grid-column:2;white-space:normal !important}
  [data-recruit-actions]{width:100%}
  [data-recruit-actions] > *{flex:1 1 220px;justify-content:center}
- [data-calendar-table] td{height:58px !important;padding:6px !important}
- [data-calendar-event-label]{display:none !important}
+ [data-calendar-day]{min-height:58px !important;padding:6px !important}
+ [data-calendar-day-label]{display:none !important}
  [data-calendar-events]{grid-template-columns:1fr !important}
  [data-calendar-dialog]{width:100% !important;max-height:calc(100dvh - 24px) !important}
  [data-calendar-dialog-header]{padding:20px 18px !important;gap:14px !important}
@@ -364,40 +356,44 @@ a:hover{color:#5CFFB4}
       <button type="button" onClick="{{ closeCalendar }}" data-calendar-close aria-label="캘린더 닫기" style="flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-size:14px;font-weight:700;padding:12px 15px;cursor:pointer;transition:border-color .18s ease,color .18s ease" style-hover="border-color:#00E582;color:#00E582"><span aria-hidden="true" style="font-size:21px;line-height:.7">×</span><span>닫기</span></button>
     </div>
     <div data-calendar-dialog-body style="overflow-y:auto;padding:28px 32px 32px">
-      <div data-calendar-months style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
-        <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
-          <h4 style="margin:0;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:22px;letter-spacing:-.02em">2026. 08</h4>
-          <table data-calendar-table style="width:100%;border-collapse:collapse;table-layout:fixed" aria-label="2026년 8월 주요 일정">
-            <thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead>
-            <tbody>
-              <tr><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td><time datetime="2026-08-01">1</time></td></tr>
-              <tr><td><time datetime="2026-08-02">2</time></td><td><time datetime="2026-08-03">3</time></td><td><time datetime="2026-08-04">4</time></td><td><time datetime="2026-08-05">5</time></td><td><time datetime="2026-08-06">6</time></td><td><time datetime="2026-08-07">7</time></td><td><time datetime="2026-08-08">8</time></td></tr>
-              <tr><td><time datetime="2026-08-09">9</time></td><td><time datetime="2026-08-10">10</time></td><td><time datetime="2026-08-11">11</time></td><td><time datetime="2026-08-12">12</time></td><td><time datetime="2026-08-13">13</time></td><td><time datetime="2026-08-14">14</time></td><td><time datetime="2026-08-15">15</time></td></tr>
-              <tr><td><time datetime="2026-08-16">16</time></td><td><time datetime="2026-08-17">17</time></td><td><time datetime="2026-08-18">18</time></td><td><time datetime="2026-08-19">19</time></td><td><time datetime="2026-08-20">20</time></td><td data-application data-event title="서류 접수 시작"><time datetime="2026-08-21">21</time><span data-calendar-event-label>접수 시작</span><span data-calendar-dot aria-hidden="true"></span></td><td data-application><time datetime="2026-08-22">22</time></td></tr>
-              <tr><td data-application><time datetime="2026-08-23">23</time></td><td data-application><time datetime="2026-08-24">24</time></td><td data-application><time datetime="2026-08-25">25</time></td><td data-application><time datetime="2026-08-26">26</time></td><td data-application><time datetime="2026-08-27">27</time></td><td data-application><time datetime="2026-08-28">28</time></td><td data-application><time datetime="2026-08-29">29</time></td></tr>
-              <tr><td data-application><time datetime="2026-08-30">30</time></td><td data-application><time datetime="2026-08-31">31</time></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
-            </tbody>
-          </table>
-        </article>
-        <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
-          <h4 style="margin:0;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:22px;letter-spacing:-.02em">2026. 09</h4>
-          <table data-calendar-table style="width:100%;border-collapse:collapse;table-layout:fixed" aria-label="2026년 9월 주요 일정">
-            <thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead>
-            <tbody>
-              <tr><td data-empty></td><td data-empty></td><td data-application><time datetime="2026-09-01">1</time></td><td data-application><time datetime="2026-09-02">2</time></td><td data-application><time datetime="2026-09-03">3</time></td><td data-application><time datetime="2026-09-04">4</time></td><td data-application><time datetime="2026-09-05">5</time></td></tr>
-              <tr><td data-application data-event title="서류 접수 마감"><time datetime="2026-09-06">6</time><span data-calendar-event-label>접수 마감</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="서류 결과 안내"><time datetime="2026-09-07">7</time><span data-calendar-event-label>서류 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-08">8</time></td><td data-event title="인터뷰 시작"><time datetime="2026-09-09">9</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td data-event title="인터뷰 진행"><time datetime="2026-09-10">10</time></td><td data-event title="인터뷰 종료"><time datetime="2026-09-11">11</time><span data-calendar-event-label>인터뷰</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-12">12</time></td></tr>
-              <tr><td><time datetime="2026-09-13">13</time></td><td><time datetime="2026-09-14">14</time></td><td data-event title="최종 결과 안내"><time datetime="2026-09-15">15</time><span data-calendar-event-label>최종 결과</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-16">16</time></td><td><time datetime="2026-09-17">17</time></td><td data-welcome title="Welcome Party"><time datetime="2026-09-18">18</time><span data-calendar-event-label>Welcome Party</span><span data-calendar-dot aria-hidden="true"></span></td><td><time datetime="2026-09-19">19</time></td></tr>
-              <tr><td><time datetime="2026-09-20">20</time></td><td><time datetime="2026-09-21">21</time></td><td><time datetime="2026-09-22">22</time></td><td><time datetime="2026-09-23">23</time></td><td><time datetime="2026-09-24">24</time></td><td><time datetime="2026-09-25">25</time></td><td><time datetime="2026-09-26">26</time></td></tr>
-              <tr><td><time datetime="2026-09-27">27</time></td><td><time datetime="2026-09-28">28</time></td><td><time datetime="2026-09-29">29</time></td><td><time datetime="2026-09-30">30</time></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
-              <tr><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td><td data-empty></td></tr>
-            </tbody>
-          </table>
-        </article>
+      <div data-calendar-toolbar style="display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:16px;margin-bottom:20px">
+        <sc-if value="{{ calendarHasPrevious }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ showPreviousCalendarMonth }}" aria-label="이전 달 보기" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:22px;cursor:pointer;transition:border-color .18s ease,color .18s ease,background .18s ease" style-hover="border-color:#00E582;color:#00E582;background:rgba(0,229,130,.08)">←</button>
+        </sc-if>
+        <sc-if value="{{ calendarAtStart }}" hint-placeholder-val="{{ false }}">
+          <button type="button" disabled aria-label="이전 달 없음" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.1);color:#4F5C68;font-size:22px;cursor:not-allowed">←</button>
+        </sc-if>
+        <div style="min-width:0;text-align:center">
+          <span style="display:block;margin-bottom:6px;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:#7C8894">MONTHLY SCHEDULE</span>
+          <strong style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:24px;letter-spacing:-.02em">{{ calendarMonthTitle }}</strong>
+        </div>
+        <sc-if value="{{ calendarHasNext }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ showNextCalendarMonth }}" aria-label="다음 달 보기" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:22px;cursor:pointer;transition:border-color .18s ease,color .18s ease,background .18s ease" style-hover="border-color:#00E582;color:#00E582;background:rgba(0,229,130,.08)">→</button>
+        </sc-if>
+        <sc-if value="{{ calendarAtEnd }}" hint-placeholder-val="{{ false }}">
+          <button type="button" disabled aria-label="다음 달 없음" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.1);color:#4F5C68;font-size:22px;cursor:not-allowed">→</button>
+        </sc-if>
       </div>
-      <div data-calendar-events style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:20px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
-        <sc-for list="{{ calendarEvents }}" as="event" hint-placeholder-count="5">
-          <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)">
-            <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;color:#00E582">{{ event.date }}</span>
+      <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
+        <div role="grid" aria-label="{{ calendarAriaLabel }}" data-calendar-grid>
+          <span role="columnheader" data-calendar-weekday>일</span><span role="columnheader" data-calendar-weekday>월</span><span role="columnheader" data-calendar-weekday>화</span><span role="columnheader" data-calendar-weekday>수</span><span role="columnheader" data-calendar-weekday>목</span><span role="columnheader" data-calendar-weekday>금</span><span role="columnheader" data-calendar-weekday>토</span>
+          <sc-for list="{{ calendarDays }}" as="day" hint-placeholder-count="42">
+            <span role="gridcell" aria-label="{{ day.ariaLabel }}" data-calendar-day style="{{ day.cellStyle }}">
+              <sc-if value="{{ day.inMonth }}" hint-placeholder-val="{{ true }}">
+                <time datetime="{{ day.date }}" style="{{ day.timeStyle }}">{{ day.number }}</time>
+                <sc-if value="{{ day.hasEvent }}" hint-placeholder-val="{{ false }}">
+                  <span data-calendar-day-label>{{ day.shortLabel }}</span>
+                  <span data-calendar-day-dot aria-hidden="true" style="{{ day.dotStyle }}"></span>
+                </sc-if>
+              </sc-if>
+            </span>
+          </sc-for>
+        </div>
+      </article>
+      <div data-calendar-events style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
+        <sc-for list="{{ calendarMonthEvents }}" as="event" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);border-left:3px solid {{ event.color }}">
+            <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;color:{{ event.color }}">{{ event.date }}</span>
             <strong style="font-size:14px;line-height:1.4">{{ event.name }}</strong>
           </div>
         </sc-for>
@@ -424,6 +420,67 @@ a:hover{color:#5CFFB4}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;cohort&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:20,&quot;section&quot;:&quot;내용&quot;}}">
 const ACCENT = '#00E582';
+
+const CALENDAR_MONTH_KEYS = ['2026-08', '2026-09', '2026-10', '2026-11', '2026-12'];
+const CALENDAR_EVENTS = [
+  { start:'2026-08-21', end:'2026-09-06', date:'08.21 — 09.06', name:'서류 접수', startLabel:'접수 시작', endLabel:'접수 마감', color:ACCENT, background:'rgba(0,229,130,.14)', rangeBackground:'rgba(0,229,130,.055)' },
+  { start:'2026-09-07', end:'2026-09-07', date:'09.07', name:'서류 결과 안내', startLabel:'서류 결과', color:ACCENT, background:'rgba(0,229,130,.14)' },
+  { start:'2026-09-09', end:'2026-09-11', date:'09.09 — 09.11', name:'인터뷰', startLabel:'인터뷰', endLabel:'인터뷰', color:ACCENT, background:'rgba(0,229,130,.14)', rangeBackground:'rgba(0,229,130,.09)' },
+  { start:'2026-09-15', end:'2026-09-15', date:'09.15', name:'최종 결과 안내', startLabel:'최종 결과', color:ACCENT, background:'rgba(0,229,130,.14)' },
+  { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'Welcome Party', startLabel:'Welcome Party', color:ACCENT, background:'rgba(0,229,130,.14)' }
+];
+
+const getSeoulToday = () => {
+  const parts = {};
+  new Intl.DateTimeFormat('en-US', {
+    timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'
+  }).formatToParts(new Date()).forEach(part => { parts[part.type] = part.value; });
+  return parts.year + '-' + parts.month + '-' + parts.day;
+};
+
+const getInitialCalendarMonth = () => {
+  const monthKey = getSeoulToday().slice(0, 7);
+  if (monthKey <= CALENDAR_MONTH_KEYS[0]) return CALENDAR_MONTH_KEYS[0];
+  if (monthKey >= CALENDAR_MONTH_KEYS[CALENDAR_MONTH_KEYS.length - 1]) return CALENDAR_MONTH_KEYS[CALENDAR_MONTH_KEYS.length - 1];
+  return CALENDAR_MONTH_KEYS.includes(monthKey) ? monthKey : CALENDAR_MONTH_KEYS[0];
+};
+
+const getCalendarDays = (monthKey, today) => {
+  const [year, month] = monthKey.split('-').map(Number);
+  const firstWeekday = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
+  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  return Array.from({ length: 42 }, (_, index) => {
+    const number = index - firstWeekday + 1;
+    const inMonth = number >= 1 && number <= daysInMonth;
+    if (!inMonth) {
+      return {
+        number:'', date:'', inMonth:false, hasEvent:false, shortLabel:'', ariaLabel:'빈 날짜',
+        timeStyle:'color:#C9D1D9', dotStyle:'background:' + ACCENT,
+        cellStyle:'background:rgba(255,255,255,.015)'
+      };
+    }
+    const date = monthKey + '-' + String(number).padStart(2, '0');
+    const matchingEvents = CALENDAR_EVENTS.filter(event => date >= event.start && date <= event.end);
+    const primaryEvent = matchingEvents[0];
+    const labels = matchingEvents.map(event => {
+      if (date === event.start) return event.startLabel || event.name;
+      if (date === event.end) return event.endLabel || event.name;
+      return '';
+    }).filter(Boolean);
+    const hasEvent = labels.length > 0;
+    const background = primaryEvent
+      ? (hasEvent ? primaryEvent.background : (primaryEvent.rangeBackground || primaryEvent.background))
+      : 'transparent';
+    return {
+      number:String(number), date, inMonth:true, hasEvent,
+      shortLabel:labels.join(' · '),
+      ariaLabel:month + '월 ' + number + '일' + (matchingEvents.length ? ', ' + matchingEvents.map(event => event.name).join(', ') : ''),
+      timeStyle:'color:' + (primaryEvent ? primaryEvent.color : '#C9D1D9'),
+      dotStyle:'background:' + (primaryEvent ? primaryEvent.color : ACCENT),
+      cellStyle:'background:' + background + (date === today ? ';box-shadow:inset 0 0 0 2px rgba(255,255,255,.72)' : '')
+    };
+  });
+};
 
 const PAST = {
   '4기': [
@@ -455,7 +512,7 @@ const FAQS = [
 ];
 
 class Component extends DCLogic {
-  state = { menuOpen: false, calendarOpen: false, tab: '4기', open: {} };
+  state = { menuOpen: false, calendarOpen: false, calendarMonth: getInitialCalendarMonth(), tab: '4기', open: {} };
 
   renderVals() {
     const cohort = this.props.cohort ?? 5;
@@ -467,11 +524,7 @@ class Component extends DCLogic {
       { name:'최종 결과 안내', date:'9/15(화)', start:'2026-09-15', end:'2026-09-15' },
       { name:'Welcome Party', date:'9/18(금)', start:'2026-09-18', end:'2026-09-18' }
     ];
-    const seoulDateParts = {};
-    new Intl.DateTimeFormat('en-US', {
-      timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'
-    }).formatToParts(new Date()).forEach(part => { seoulDateParts[part.type] = part.value; });
-    const today = seoulDateParts.year + '-' + seoulDateParts.month + '-' + seoulDateParts.day;
+    const today = getSeoulToday();
     const steps = stepData.map((step, i) => {
       const current = !!step.start && today >= step.start && today <= step.end;
       const completed = !!step.end && today > step.end;
@@ -487,13 +540,22 @@ class Component extends DCLogic {
       };
     });
 
-    const calendarEvents = [
-      { date:'08.21 — 09.06', name:'서류 접수' },
-      { date:'09.07', name:'서류 결과 안내' },
-      { date:'09.09 — 09.11', name:'인터뷰' },
-      { date:'09.15', name:'최종 결과 안내' },
-      { date:'09.18', name:'Welcome Party' }
-    ];
+    const calendarMonthIndex = CALENDAR_MONTH_KEYS.indexOf(this.state.calendarMonth);
+    const [calendarYear, calendarMonthNumber] = this.state.calendarMonth.split('-').map(Number);
+    const calendarMonthStart = this.state.calendarMonth + '-01';
+    const calendarMonthEnd = this.state.calendarMonth + '-' + String(new Date(Date.UTC(calendarYear, calendarMonthNumber, 0)).getUTCDate()).padStart(2, '0');
+    const calendarDays = getCalendarDays(this.state.calendarMonth, today);
+    const calendarMonthEvents = CALENDAR_EVENTS.filter(event => event.start <= calendarMonthEnd && event.end >= calendarMonthStart);
+    const calendarHasPrevious = calendarMonthIndex > 0;
+    const calendarHasNext = calendarMonthIndex < CALENDAR_MONTH_KEYS.length - 1;
+    const showPreviousCalendarMonth = () => {
+      if (!calendarHasPrevious) return;
+      this.setState({ calendarMonth: CALENDAR_MONTH_KEYS[calendarMonthIndex - 1] });
+    };
+    const showNextCalendarMonth = () => {
+      if (!calendarHasNext) return;
+      this.setState({ calendarMonth: CALENDAR_MONTH_KEYS[calendarMonthIndex + 1] });
+    };
 
     const tabBase = "font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;padding:15px 26px;cursor:pointer;border:0;border-right:1px solid rgba(255,255,255,.14);transition:background .18s ease,color .18s ease";
     const keys = Object.keys(PAST);
@@ -547,7 +609,7 @@ class Component extends DCLogic {
 
     const openCalendar = () => {
       syncOverlayState(false, true);
-      this.setState({ menuOpen: false, calendarOpen: true });
+      this.setState({ menuOpen: false, calendarOpen: true, calendarMonth: getInitialCalendarMonth() });
       setTimeout(() => {
         const closeButton = document.querySelector('[data-calendar-close]');
         if (closeButton) closeButton.focus();
@@ -575,9 +637,19 @@ class Component extends DCLogic {
       calendarOpen: this.state.calendarOpen,
       calendarClosed: !this.state.calendarOpen,
       calendarDisplay: this.state.calendarOpen ? 'flex' : 'none',
+      calendarMonthTitle: calendarYear + '. ' + String(calendarMonthNumber).padStart(2, '0'),
+      calendarAriaLabel: calendarYear + '년 ' + calendarMonthNumber + '월 주요 일정',
+      calendarDays,
+      calendarMonthEvents,
+      calendarHasPrevious,
+      calendarHasNext,
+      calendarAtStart: !calendarHasPrevious,
+      calendarAtEnd: !calendarHasNext,
+      showPreviousCalendarMonth,
+      showNextCalendarMonth,
       toggleMenu,
       openCalendar, closeCalendar, closeCalendarOnEscape,
-      steps, calendarEvents, tabs, activities, faqs
+      steps, tabs, activities, faqs
     };
   }
 }
