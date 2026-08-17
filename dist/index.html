@@ -374,6 +374,12 @@ a:hover{color:#5CFFB4}
           <button type="button" disabled aria-label="다음 달 없음" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.1);color:#4F5C68;font-size:22px;cursor:not-allowed">→</button>
         </sc-if>
       </div>
+      <div aria-label="리크루팅 일정 색상 안내" data-calendar-legend style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(0,229,130,.35);background:rgba(0,229,130,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#00E582"></span>서류 접수</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(99,179,255,.35);background:rgba(99,179,255,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#63B3FF"></span>서류 결과</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(183,148,246,.35);background:rgba(183,148,246,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#B794F6"></span>인터뷰</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,203,102,.35);background:rgba(255,203,102,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#FFCB66"></span>최종 결과</span>
+      </div>
       <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
         <div role="grid" aria-label="{{ calendarAriaLabel }}" data-calendar-grid>
           <span role="columnheader" data-calendar-weekday>일</span><span role="columnheader" data-calendar-weekday>월</span><span role="columnheader" data-calendar-weekday>화</span><span role="columnheader" data-calendar-weekday>수</span><span role="columnheader" data-calendar-weekday>목</span><span role="columnheader" data-calendar-weekday>금</span><span role="columnheader" data-calendar-weekday>토</span>
@@ -423,11 +429,11 @@ const ACCENT = '#00E582';
 
 const CALENDAR_MONTH_KEYS = ['2026-08', '2026-09', '2026-10', '2026-11', '2026-12'];
 const CALENDAR_EVENTS = [
-  { start:'2026-08-21', end:'2026-09-06', date:'08.21 — 09.06', name:'서류 접수', startLabel:'접수 시작', endLabel:'접수 마감', color:ACCENT, background:'rgba(0,229,130,.14)', rangeBackground:'rgba(0,229,130,.055)' },
-  { start:'2026-09-07', end:'2026-09-07', date:'09.07', name:'서류 결과 안내', startLabel:'서류 결과', color:ACCENT, background:'rgba(0,229,130,.14)' },
-  { start:'2026-09-09', end:'2026-09-11', date:'09.09 — 09.11', name:'인터뷰', startLabel:'인터뷰', endLabel:'인터뷰', color:ACCENT, background:'rgba(0,229,130,.14)', rangeBackground:'rgba(0,229,130,.09)' },
-  { start:'2026-09-15', end:'2026-09-15', date:'09.15', name:'최종 결과 안내', startLabel:'최종 결과', color:ACCENT, background:'rgba(0,229,130,.14)' },
-  { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'Welcome Party', startLabel:'Welcome Party', color:ACCENT, background:'rgba(0,229,130,.14)' }
+  { start:'2026-08-21', end:'2026-09-06', date:'08.21 — 09.06', name:'서류 접수', startLabel:'접수 시작', endLabel:'접수 마감', color:'#00E582', background:'rgba(0,229,130,.16)', rangeBackground:'rgba(0,229,130,.06)' },
+  { start:'2026-09-07', end:'2026-09-07', date:'09.07', name:'서류 결과 안내', startLabel:'서류 결과', color:'#63B3FF', background:'rgba(99,179,255,.17)' },
+  { start:'2026-09-09', end:'2026-09-11', date:'09.09 — 09.11', name:'인터뷰', startLabel:'인터뷰', endLabel:'인터뷰', color:'#B794F6', background:'rgba(183,148,246,.17)', rangeBackground:'rgba(183,148,246,.09)' },
+  { start:'2026-09-15', end:'2026-09-15', date:'09.15', name:'최종 결과 안내', startLabel:'최종 결과', color:'#FFCB66', background:'rgba(255,203,102,.17)' },
+  { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'Welcome Party', startLabel:'Welcome Party', color:'#FF8FA3', background:'rgba(255,143,163,.17)' }
 ];
 
 const getSeoulToday = () => {
