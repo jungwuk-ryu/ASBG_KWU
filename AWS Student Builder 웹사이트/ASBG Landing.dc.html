@@ -40,10 +40,14 @@ a:hover{color:#5CFFB4}
 [data-calendar-day-dot]{display:block;width:5px;height:5px;margin-top:6px}
 [data-calendar-months]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 [data-calendar-month-title]{margin:0;padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.02em}
+[data-calendar-range-mobile],[data-calendar-events-mobile]{display:none !important}
 @media (max-width:960px){
  [data-hero-grid],[data-section-grid],[data-footer-grid]{grid-template-columns:1fr !important;gap:40px !important}
  [data-cards-3]{grid-template-columns:1fr !important}
  [data-calendar-months]{grid-template-columns:1fr !important}
+ [data-calendar-secondary="true"],[data-calendar-range-desktop],[data-calendar-events-desktop]{display:none !important}
+ [data-calendar-range-mobile]{display:inline !important}
+ [data-calendar-events-mobile]{display:grid !important}
  [data-nav-links]{display:none !important}
  [data-menu-btn]{display:flex !important;align-items:center;justify-content:center}
  nav > div{padding:0 20px !important;gap:12px !important}
@@ -340,7 +344,7 @@ a:hover{color:#5CFFB4}
           <button type="button" disabled aria-label="이전 달 없음" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.1);color:#4F5C68;font-size:22px;cursor:not-allowed">←</button>
         </sc-if>
         <div style="min-width:0;text-align:center">
-          <strong style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:24px;letter-spacing:-.02em">{{ calendarMonthTitle }}</strong>
+          <strong style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:24px;letter-spacing:-.02em"><span data-calendar-range-desktop>{{ calendarMonthTitle }}</span><span data-calendar-range-mobile>{{ calendarPrimaryMonthTitle }}</span></strong>
         </div>
         <sc-if value="{{ calendarHasNext }}" hint-placeholder-val="{{ true }}">
           <button type="button" onClick="{{ showNextCalendarMonth }}" aria-label="다음 달 보기" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:22px;cursor:pointer;transition:border-color .18s ease,color .18s ease,background .18s ease" style-hover="border-color:#00E582;color:#00E582;background:rgba(0,229,130,.08)">→</button>
@@ -356,7 +360,7 @@ a:hover{color:#5CFFB4}
       </div>
       <div data-calendar-months>
         <sc-for list="{{ calendarMonthPanels }}" as="month" hint-placeholder-count="2">
-          <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-calendar-month data-reveal>
+          <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-calendar-month data-calendar-secondary="{{ month.secondary }}" data-reveal>
             <h4 data-calendar-month-title>{{ month.title }}</h4>
             <div role="grid" aria-label="{{ month.ariaLabel }}" data-calendar-grid>
               <span role="columnheader" data-calendar-weekday>일</span><span role="columnheader" data-calendar-weekday>월</span><span role="columnheader" data-calendar-weekday>화</span><span role="columnheader" data-calendar-weekday>수</span><span role="columnheader" data-calendar-weekday>목</span><span role="columnheader" data-calendar-weekday>금</span><span role="columnheader" data-calendar-weekday>토</span>
@@ -375,8 +379,16 @@ a:hover{color:#5CFFB4}
           </article>
         </sc-for>
       </div>
-      <div data-calendar-events style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
+      <div data-calendar-events data-calendar-events-desktop style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
         <sc-for list="{{ calendarMonthEvents }}" as="event" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);border-left:3px solid {{ event.color }}">
+            <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;color:{{ event.color }}">{{ event.date }}</span>
+            <strong style="font-size:14px;line-height:1.4">{{ event.name }}</strong>
+          </div>
+        </sc-for>
+      </div>
+      <div data-calendar-events data-calendar-events-mobile style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
+        <sc-for list="{{ calendarPrimaryMonthEvents }}" as="event" hint-placeholder-count="5">
           <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);border-left:3px solid {{ event.color }}">
             <span style="font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;color:{{ event.color }}">{{ event.date }}</span>
             <strong style="font-size:14px;line-height:1.4">{{ event.name }}</strong>
@@ -545,10 +557,11 @@ class Component extends DCLogic {
 
     const calendarMonthIndex = CALENDAR_MONTH_KEYS.indexOf(this.state.calendarMonth);
     const calendarMonthStart = this.state.calendarMonth + '-01';
-    const calendarMonthPanels = CALENDAR_MONTH_KEYS.slice(calendarMonthIndex, calendarMonthIndex + 2).map(monthKey => {
+    const calendarMonthPanels = CALENDAR_MONTH_KEYS.slice(calendarMonthIndex, calendarMonthIndex + 2).map((monthKey, index) => {
       const [year, month] = monthKey.split('-').map(Number);
       return {
         key: monthKey,
+        secondary: index === 1,
         title: String(month).padStart(2, '0'),
         rangeTitle: year + '. ' + String(month).padStart(2, '0'),
         ariaLabel: year + '년 ' + month + '월 주요 일정',
@@ -559,6 +572,9 @@ class Component extends DCLogic {
     const [calendarLastYear, calendarLastMonthNumber] = calendarLastMonthKey.split('-').map(Number);
     const calendarMonthEnd = calendarLastMonthKey + '-' + String(new Date(Date.UTC(calendarLastYear, calendarLastMonthNumber, 0)).getUTCDate()).padStart(2, '0');
     const calendarMonthEvents = CALENDAR_EVENTS.filter(event => event.start <= calendarMonthEnd && event.end >= calendarMonthStart);
+    const [calendarPrimaryYear, calendarPrimaryMonthNumber] = this.state.calendarMonth.split('-').map(Number);
+    const calendarPrimaryMonthEnd = this.state.calendarMonth + '-' + String(new Date(Date.UTC(calendarPrimaryYear, calendarPrimaryMonthNumber, 0)).getUTCDate()).padStart(2, '0');
+    const calendarPrimaryMonthEvents = CALENDAR_EVENTS.filter(event => event.start <= calendarPrimaryMonthEnd && event.end >= calendarMonthStart);
     const calendarHasPrevious = calendarMonthIndex > 0;
     const calendarHasNext = calendarMonthIndex < CALENDAR_MONTH_KEYS.length - 2;
     const showPreviousCalendarMonth = () => {
@@ -651,8 +667,10 @@ class Component extends DCLogic {
       calendarClosed: !this.state.calendarOpen,
       calendarDisplay: this.state.calendarOpen ? 'flex' : 'none',
       calendarMonthTitle: calendarMonthPanels.map(month => month.rangeTitle).join(' — '),
+      calendarPrimaryMonthTitle: calendarMonthPanels[0].rangeTitle,
       calendarMonthPanels,
       calendarMonthEvents,
+      calendarPrimaryMonthEvents,
       calendarHasPrevious,
       calendarHasNext,
       calendarAtStart: !calendarHasPrevious,
