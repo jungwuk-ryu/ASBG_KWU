@@ -66,9 +66,12 @@ a:hover{color:#5CFFB4}
 [data-calendar-day] time{display:block;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:11px;font-weight:500}
 [data-calendar-day-label]{display:block;margin-top:8px;font-size:10px;line-height:1.3;font-weight:700;color:#DDFBED}
 [data-calendar-day-dot]{display:block;width:5px;height:5px;margin-top:6px}
+[data-calendar-months]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+[data-calendar-month-title]{margin:0;padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.14);font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.02em}
 @media (max-width:960px){
  [data-hero-grid],[data-section-grid],[data-footer-grid]{grid-template-columns:1fr !important;gap:40px !important}
  [data-cards-3]{grid-template-columns:1fr !important}
+ [data-calendar-months]{grid-template-columns:1fr !important}
  [data-nav-links]{display:none !important}
  [data-menu-btn]{display:flex !important;align-items:center;justify-content:center}
  nav > div{padding:0 20px !important;gap:12px !important}
@@ -96,6 +99,7 @@ a:hover{color:#5CFFB4}
  [data-recruit-actions] > *{flex:1 1 220px;justify-content:center}
  [data-calendar-day]{min-height:58px !important;padding:6px !important}
  [data-calendar-day-label]{display:none !important}
+ [data-calendar-months]{gap:12px !important}
  [data-calendar-events]{grid-template-columns:1fr !important}
  [data-calendar-dialog]{width:100% !important;max-height:calc(100dvh - 24px) !important}
  [data-calendar-dialog-header]{padding:20px 18px !important;gap:14px !important}
@@ -379,22 +383,27 @@ a:hover{color:#5CFFB4}
         <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(0,229,130,.35);background:rgba(0,229,130,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#00E582"></span>일반 일정</span>
         <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(148,163,184,.35);background:rgba(148,163,184,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#94A3B8"></span>공휴일</span>
       </div>
-      <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
-        <div role="grid" aria-label="{{ calendarAriaLabel }}" data-calendar-grid>
-          <span role="columnheader" data-calendar-weekday>일</span><span role="columnheader" data-calendar-weekday>월</span><span role="columnheader" data-calendar-weekday>화</span><span role="columnheader" data-calendar-weekday>수</span><span role="columnheader" data-calendar-weekday>목</span><span role="columnheader" data-calendar-weekday>금</span><span role="columnheader" data-calendar-weekday>토</span>
-          <sc-for list="{{ calendarDays }}" as="day" hint-placeholder-count="42">
-            <span role="gridcell" aria-label="{{ day.ariaLabel }}" data-calendar-day style="{{ day.cellStyle }}">
-              <sc-if value="{{ day.inMonth }}" hint-placeholder-val="{{ true }}">
-                <time datetime="{{ day.date }}" style="{{ day.timeStyle }}">{{ day.number }}</time>
-                <sc-if value="{{ day.hasEvent }}" hint-placeholder-val="{{ false }}">
-                  <span data-calendar-day-label>{{ day.shortLabel }}</span>
-                  <span data-calendar-day-dot aria-hidden="true" style="{{ day.dotStyle }}"></span>
-                </sc-if>
-              </sc-if>
-            </span>
-          </sc-for>
-        </div>
-      </article>
+      <div data-calendar-months>
+        <sc-for list="{{ calendarMonthPanels }}" as="month" hint-placeholder-count="2">
+          <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-calendar-month data-reveal>
+            <h4 data-calendar-month-title>{{ month.title }}</h4>
+            <div role="grid" aria-label="{{ month.ariaLabel }}" data-calendar-grid>
+              <span role="columnheader" data-calendar-weekday>일</span><span role="columnheader" data-calendar-weekday>월</span><span role="columnheader" data-calendar-weekday>화</span><span role="columnheader" data-calendar-weekday>수</span><span role="columnheader" data-calendar-weekday>목</span><span role="columnheader" data-calendar-weekday>금</span><span role="columnheader" data-calendar-weekday>토</span>
+              <sc-for list="{{ month.days }}" as="day" hint-placeholder-count="42">
+                <span role="gridcell" aria-label="{{ day.ariaLabel }}" data-calendar-day style="{{ day.cellStyle }}">
+                  <sc-if value="{{ day.inMonth }}" hint-placeholder-val="{{ true }}">
+                    <time datetime="{{ day.date }}" style="{{ day.timeStyle }}">{{ day.number }}</time>
+                    <sc-if value="{{ day.hasEvent }}" hint-placeholder-val="{{ false }}">
+                      <span data-calendar-day-label>{{ day.shortLabel }}</span>
+                      <span data-calendar-day-dot aria-hidden="true" style="{{ day.dotStyle }}"></span>
+                    </sc-if>
+                  </sc-if>
+                </span>
+              </sc-for>
+            </div>
+          </article>
+        </sc-for>
+      </div>
       <div data-calendar-events style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.14)" data-reveal>
         <sc-for list="{{ calendarMonthEvents }}" as="event" hint-placeholder-count="5">
           <div style="display:flex;flex-direction:column;gap:7px;padding:18px;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);border-left:3px solid {{ event.color }}">
@@ -565,13 +574,22 @@ class Component extends DCLogic {
     });
 
     const calendarMonthIndex = CALENDAR_MONTH_KEYS.indexOf(this.state.calendarMonth);
-    const [calendarYear, calendarMonthNumber] = this.state.calendarMonth.split('-').map(Number);
     const calendarMonthStart = this.state.calendarMonth + '-01';
-    const calendarMonthEnd = this.state.calendarMonth + '-' + String(new Date(Date.UTC(calendarYear, calendarMonthNumber, 0)).getUTCDate()).padStart(2, '0');
-    const calendarDays = getCalendarDays(this.state.calendarMonth, today);
+    const calendarMonthPanels = CALENDAR_MONTH_KEYS.slice(calendarMonthIndex, calendarMonthIndex + 2).map(monthKey => {
+      const [year, month] = monthKey.split('-').map(Number);
+      return {
+        key: monthKey,
+        title: year + '. ' + String(month).padStart(2, '0'),
+        ariaLabel: year + '년 ' + month + '월 주요 일정',
+        days: getCalendarDays(monthKey, today)
+      };
+    });
+    const calendarLastMonthKey = calendarMonthPanels[calendarMonthPanels.length - 1].key;
+    const [calendarLastYear, calendarLastMonthNumber] = calendarLastMonthKey.split('-').map(Number);
+    const calendarMonthEnd = calendarLastMonthKey + '-' + String(new Date(Date.UTC(calendarLastYear, calendarLastMonthNumber, 0)).getUTCDate()).padStart(2, '0');
     const calendarMonthEvents = CALENDAR_EVENTS.filter(event => event.start <= calendarMonthEnd && event.end >= calendarMonthStart);
     const calendarHasPrevious = calendarMonthIndex > 0;
-    const calendarHasNext = calendarMonthIndex < CALENDAR_MONTH_KEYS.length - 1;
+    const calendarHasNext = calendarMonthIndex < CALENDAR_MONTH_KEYS.length - 2;
     const showPreviousCalendarMonth = () => {
       if (!calendarHasPrevious) return;
       this.setState({ calendarMonth: CALENDAR_MONTH_KEYS[calendarMonthIndex - 1] });
@@ -661,9 +679,8 @@ class Component extends DCLogic {
       calendarOpen: this.state.calendarOpen,
       calendarClosed: !this.state.calendarOpen,
       calendarDisplay: this.state.calendarOpen ? 'flex' : 'none',
-      calendarMonthTitle: calendarYear + '. ' + String(calendarMonthNumber).padStart(2, '0'),
-      calendarAriaLabel: calendarYear + '년 ' + calendarMonthNumber + '월 주요 일정',
-      calendarDays,
+      calendarMonthTitle: calendarMonthPanels.map(month => month.title).join(' — '),
+      calendarMonthPanels,
       calendarMonthEvents,
       calendarHasPrevious,
       calendarHasNext,
