@@ -372,7 +372,7 @@ a:hover{color:#5CFFB4}
           <button type="button" disabled aria-label="이전 달 없음" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.1);color:#4F5C68;font-size:22px;cursor:not-allowed">←</button>
         </sc-if>
         <div style="min-width:0;text-align:center">
-          <strong style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:24px;letter-spacing:-.02em"><span data-calendar-range-desktop>{{ calendarMonthTitle }}</span><span data-calendar-range-mobile>{{ calendarPrimaryMonthTitle }}</span></strong>
+          <strong style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:24px;line-height:1.25;letter-spacing:-.02em;white-space:pre-line"><span data-calendar-range-desktop>{{ calendarMonthTitle }}</span><span data-calendar-range-mobile>{{ calendarPrimaryMonthTitle }}</span></strong>
         </div>
         <sc-if value="{{ calendarHasNext }}" hint-placeholder-val="{{ true }}">
           <button type="button" onClick="{{ showNextCalendarMonth }}" aria-label="다음 달 보기" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:22px;cursor:pointer;transition:border-color .18s ease,color .18s ease,background .18s ease" style-hover="border-color:#00E582;color:#00E582;background:rgba(0,229,130,.08)">→</button>
@@ -590,8 +590,7 @@ class Component extends DCLogic {
       return {
         key: monthKey,
         secondary: index === 1,
-        title: String(month).padStart(2, '0'),
-        rangeTitle: year + '. ' + String(month).padStart(2, '0'),
+        title: month + '월',
         ariaLabel: year + '년 ' + month + '월 주요 일정',
         days: getCalendarDays(monthKey, today)
       };
@@ -694,8 +693,8 @@ class Component extends DCLogic {
       calendarOpen: this.state.calendarOpen,
       calendarClosed: !this.state.calendarOpen,
       calendarDisplay: this.state.calendarOpen ? 'flex' : 'none',
-      calendarMonthTitle: calendarMonthPanels.map(month => month.rangeTitle).join(' — '),
-      calendarPrimaryMonthTitle: calendarMonthPanels[0].rangeTitle,
+      calendarMonthTitle: calendarPrimaryYear + '\n' + calendarMonthPanels.map(month => month.title).join(' - '),
+      calendarPrimaryMonthTitle: calendarPrimaryYear + '\n' + calendarMonthPanels[0].title,
       calendarMonthPanels,
       calendarMonthEvents,
       calendarPrimaryMonthEvents,
