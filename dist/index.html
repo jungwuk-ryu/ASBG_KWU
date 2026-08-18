@@ -360,7 +360,7 @@ a:hover{color:#5CFFB4}
       <button type="button" onClick="{{ closeCalendar }}" data-calendar-close aria-label="캘린더 닫기" style="flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-size:14px;font-weight:700;padding:12px 15px;cursor:pointer;transition:border-color .18s ease,color .18s ease" style-hover="border-color:#00E582;color:#00E582"><span aria-hidden="true" style="font-size:21px;line-height:.7">×</span><span>닫기</span></button>
     </div>
     <div data-calendar-dialog-body style="overflow-y:auto;padding:28px 32px 32px">
-      <div data-calendar-toolbar style="display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:16px;margin-bottom:20px">
+      <div data-calendar-toolbar style="position:sticky;top:0;z-index:3;display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:16px;margin:-20px 0 20px;padding:20px 0;background:#141D26;box-shadow:0 1px 0 rgba(255,255,255,.14)">
         <sc-if value="{{ calendarHasPrevious }}" hint-placeholder-val="{{ true }}">
           <button type="button" onClick="{{ showPreviousCalendarMonth }}" aria-label="이전 달 보기" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:22px;cursor:pointer;transition:border-color .18s ease,color .18s ease,background .18s ease" style-hover="border-color:#00E582;color:#00E582;background:rgba(0,229,130,.08)">←</button>
         </sc-if>
@@ -368,7 +368,6 @@ a:hover{color:#5CFFB4}
           <button type="button" disabled aria-label="이전 달 없음" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.1);color:#4F5C68;font-size:22px;cursor:not-allowed">←</button>
         </sc-if>
         <div style="min-width:0;text-align:center">
-          <span style="display:block;margin-bottom:6px;font-family:'Amazon Ember Mono','IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:#7C8894">MONTHLY SCHEDULE</span>
           <strong style="font-family:'Archivo','Amazon Ember Display',sans-serif;font-size:24px;letter-spacing:-.02em">{{ calendarMonthTitle }}</strong>
         </div>
         <sc-if value="{{ calendarHasNext }}" hint-placeholder-val="{{ true }}">
@@ -441,7 +440,6 @@ const CALENDAR_EVENTS = [
   { start:'2026-09-07', end:'2026-09-07', date:'09.07', name:'서류 결과 안내', startLabel:'서류 결과', color:'#FFCB66', background:'rgba(255,203,102,.17)' },
   { start:'2026-09-09', end:'2026-09-11', date:'09.09 — 09.11', name:'인터뷰', startLabel:'인터뷰', endLabel:'인터뷰', color:'#FFCB66', background:'rgba(255,203,102,.17)', rangeBackground:'rgba(255,203,102,.08)' },
   { start:'2026-09-15', end:'2026-09-15', date:'09.15', name:'최종 결과 안내', startLabel:'최종 결과', color:'#00E582', background:'rgba(0,229,130,.16)' },
-  { start:'2026-09-16', end:'2026-09-16', date:'09.16', name:'세션 자료 준비 마감', startLabel:'자료 준비 마감', color:'#00E582', background:'rgba(0,229,130,.16)' },
   { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'OT (캠퍼스 투어)', startLabel:'OT · 캠퍼스 투어', color:'#00E582', background:'rgba(0,229,130,.16)' },
   { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'Welcome Party', startLabel:'Welcome Party', color:'#00E582', background:'rgba(0,229,130,.16)' },
   { start:'2026-09-21', end:'2026-09-21', date:'09.21', name:'세션 1 (핸즈온)', startLabel:'세션 1', color:'#00E582', background:'rgba(0,229,130,.16)' },
@@ -579,7 +577,8 @@ class Component extends DCLogic {
       const [year, month] = monthKey.split('-').map(Number);
       return {
         key: monthKey,
-        title: year + '. ' + String(month).padStart(2, '0'),
+        title: String(month).padStart(2, '0'),
+        rangeTitle: year + '. ' + String(month).padStart(2, '0'),
         ariaLabel: year + '년 ' + month + '월 주요 일정',
         days: getCalendarDays(monthKey, today)
       };
@@ -679,7 +678,7 @@ class Component extends DCLogic {
       calendarOpen: this.state.calendarOpen,
       calendarClosed: !this.state.calendarOpen,
       calendarDisplay: this.state.calendarOpen ? 'flex' : 'none',
-      calendarMonthTitle: calendarMonthPanels.map(month => month.title).join(' — '),
+      calendarMonthTitle: calendarMonthPanels.map(month => month.rangeTitle).join(' — '),
       calendarMonthPanels,
       calendarMonthEvents,
       calendarHasPrevious,
