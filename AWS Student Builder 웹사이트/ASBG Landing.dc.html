@@ -346,14 +346,10 @@ a:hover{color:#5CFFB4}
           <button type="button" disabled aria-label="다음 달 없음" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.1);color:#4F5C68;font-size:22px;cursor:not-allowed">→</button>
         </sc-if>
       </div>
-      <div aria-label="리크루팅 일정 색상 안내" data-calendar-legend style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
-        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(0,229,130,.35);background:rgba(0,229,130,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#00E582"></span>서류 접수</span>
-        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(99,179,255,.35);background:rgba(99,179,255,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#63B3FF"></span>서류 결과</span>
-        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(183,148,246,.35);background:rgba(183,148,246,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#B794F6"></span>인터뷰</span>
-        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,203,102,.35);background:rgba(255,203,102,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#FFCB66"></span>최종 결과</span>
-        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(79,209,197,.35);background:rgba(79,209,197,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#4FD1C5"></span>클럽 활동</span>
-        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,159,67,.35);background:rgba(255,159,67,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#FF9F43"></span>학사 일정</span>
-        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,122,144,.35);background:rgba(255,122,144,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#FF7A90"></span>공휴일</span>
+      <div aria-label="일정 색상 안내" data-calendar-legend style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,203,102,.35);background:rgba(255,203,102,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#FFCB66"></span>리크루팅 일정</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(0,229,130,.35);background:rgba(0,229,130,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#00E582"></span>일반 일정</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(148,163,184,.35);background:rgba(148,163,184,.06);font-size:11px;color:#D8E1E8"><span aria-hidden="true" style="width:7px;height:7px;background:#94A3B8"></span>공휴일</span>
       </div>
       <article style="min-width:0;background:#18222C;border:1px solid rgba(255,255,255,.14)" data-reveal>
         <div role="grid" aria-label="{{ calendarAriaLabel }}" data-calendar-grid>
@@ -404,27 +400,27 @@ const ACCENT = '#00E582';
 
 const CALENDAR_MONTH_KEYS = ['2026-08', '2026-09', '2026-10', '2026-11', '2026-12'];
 const CALENDAR_EVENTS = [
-  { start:'2026-08-21', end:'2026-09-05', date:'08.21 — 09.05', name:'서류 접수', startLabel:'접수 시작', endLabel:'접수 마감', color:'#00E582', background:'rgba(0,229,130,.16)', rangeBackground:'rgba(0,229,130,.06)' },
-  { start:'2026-09-07', end:'2026-09-07', date:'09.07', name:'서류 결과 안내', startLabel:'서류 결과', color:'#63B3FF', background:'rgba(99,179,255,.17)' },
-  { start:'2026-09-09', end:'2026-09-11', date:'09.09 — 09.11', name:'인터뷰', startLabel:'인터뷰', endLabel:'인터뷰', color:'#B794F6', background:'rgba(183,148,246,.17)', rangeBackground:'rgba(183,148,246,.09)' },
-  { start:'2026-09-15', end:'2026-09-15', date:'09.15', name:'최종 결과 안내', startLabel:'최종 결과', color:'#FFCB66', background:'rgba(255,203,102,.17)' },
-  { start:'2026-09-16', end:'2026-09-16', date:'09.16', name:'세션 자료 준비 마감', startLabel:'자료 준비 마감', color:'#94A3B8', background:'rgba(148,163,184,.16)' },
-  { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'OT (캠퍼스 투어)', startLabel:'OT · 캠퍼스 투어', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'Welcome Party', startLabel:'Welcome Party', color:'#FF8FA3', background:'rgba(255,143,163,.17)' },
-  { start:'2026-09-21', end:'2026-09-21', date:'09.21', name:'세션 1 (핸즈온)', startLabel:'세션 1', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-09-24', end:'2026-09-27', date:'09.24 — 09.27', name:'추석 연휴', startLabel:'추석 연휴', endLabel:'추석 연휴', color:'#FF7A90', background:'rgba(255,122,144,.17)', rangeBackground:'rgba(255,122,144,.08)' },
-  { start:'2026-09-28', end:'2026-09-28', date:'09.28', name:'세션 2 (핸즈온)', startLabel:'세션 2', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-10-03', end:'2026-10-03', date:'10.03', name:'개천절', startLabel:'개천절', color:'#FF7A90', background:'rgba(255,122,144,.17)' },
-  { start:'2026-10-05', end:'2026-10-05', date:'10.05', name:'대체공휴일 (개천절)', startLabel:'대체공휴일', color:'#FF7A90', background:'rgba(255,122,144,.17)' },
-  { start:'2026-10-06', end:'2026-10-06', date:'10.06', name:'소모임 시작', startLabel:'소모임 시작', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-10-09', end:'2026-10-09', date:'10.09', name:'한글날', startLabel:'한글날', color:'#FF7A90', background:'rgba(255,122,144,.17)' },
-  { start:'2026-10-12', end:'2026-10-12', date:'10.12', name:'세션 3 (핸즈온)', startLabel:'세션 3', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-10-20', end:'2026-10-26', date:'10.20 — 10.26', name:'중간고사', startLabel:'중간고사 시작', endLabel:'중간고사 종료', color:'#FF9F43', background:'rgba(255,159,67,.17)', rangeBackground:'rgba(255,159,67,.08)' },
-  { start:'2026-11-02', end:'2026-11-02', date:'11.02', name:'세션 4', startLabel:'세션 4', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-11-16', end:'2026-11-16', date:'11.16', name:'세션 5', startLabel:'세션 5', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-11-23', end:'2026-11-23', date:'11.23', name:'세션 6', startLabel:'세션 6', color:'#4FD1C5', background:'rgba(79,209,197,.17)' },
-  { start:'2026-12-08', end:'2026-12-14', date:'12.08 — 12.14', name:'기말고사', startLabel:'기말고사 시작', endLabel:'기말고사 종료', color:'#FF9F43', background:'rgba(255,159,67,.17)', rangeBackground:'rgba(255,159,67,.08)' },
-  { start:'2026-12-25', end:'2026-12-25', date:'12.25', name:'성탄절', startLabel:'성탄절', color:'#FF7A90', background:'rgba(255,122,144,.17)' }
+  { start:'2026-08-21', end:'2026-09-05', date:'08.21 — 09.05', name:'서류 접수', startLabel:'접수 시작', endLabel:'접수 마감', color:'#FFCB66', background:'rgba(255,203,102,.17)', rangeBackground:'rgba(255,203,102,.08)' },
+  { start:'2026-09-07', end:'2026-09-07', date:'09.07', name:'서류 결과 안내', startLabel:'서류 결과', color:'#FFCB66', background:'rgba(255,203,102,.17)' },
+  { start:'2026-09-09', end:'2026-09-11', date:'09.09 — 09.11', name:'인터뷰', startLabel:'인터뷰', endLabel:'인터뷰', color:'#FFCB66', background:'rgba(255,203,102,.17)', rangeBackground:'rgba(255,203,102,.08)' },
+  { start:'2026-09-15', end:'2026-09-15', date:'09.15', name:'최종 결과 안내', startLabel:'최종 결과', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-09-16', end:'2026-09-16', date:'09.16', name:'세션 자료 준비 마감', startLabel:'자료 준비 마감', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'OT (캠퍼스 투어)', startLabel:'OT · 캠퍼스 투어', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-09-18', end:'2026-09-18', date:'09.18', name:'Welcome Party', startLabel:'Welcome Party', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-09-21', end:'2026-09-21', date:'09.21', name:'세션 1 (핸즈온)', startLabel:'세션 1', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-09-24', end:'2026-09-27', date:'09.24 — 09.27', name:'추석 연휴', startLabel:'추석 연휴', endLabel:'추석 연휴', color:'#94A3B8', background:'rgba(148,163,184,.16)', rangeBackground:'rgba(148,163,184,.08)' },
+  { start:'2026-09-28', end:'2026-09-28', date:'09.28', name:'세션 2 (핸즈온)', startLabel:'세션 2', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-10-03', end:'2026-10-03', date:'10.03', name:'개천절', startLabel:'개천절', color:'#94A3B8', background:'rgba(148,163,184,.16)' },
+  { start:'2026-10-05', end:'2026-10-05', date:'10.05', name:'대체공휴일 (개천절)', startLabel:'대체공휴일', color:'#94A3B8', background:'rgba(148,163,184,.16)' },
+  { start:'2026-10-06', end:'2026-10-06', date:'10.06', name:'소모임 시작', startLabel:'소모임 시작', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-10-09', end:'2026-10-09', date:'10.09', name:'한글날', startLabel:'한글날', color:'#94A3B8', background:'rgba(148,163,184,.16)' },
+  { start:'2026-10-12', end:'2026-10-12', date:'10.12', name:'세션 3 (핸즈온)', startLabel:'세션 3', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-10-20', end:'2026-10-26', date:'10.20 — 10.26', name:'중간고사', startLabel:'중간고사 시작', endLabel:'중간고사 종료', color:'#00E582', background:'rgba(0,229,130,.16)', rangeBackground:'rgba(0,229,130,.06)' },
+  { start:'2026-11-02', end:'2026-11-02', date:'11.02', name:'세션 4', startLabel:'세션 4', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-11-16', end:'2026-11-16', date:'11.16', name:'세션 5', startLabel:'세션 5', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-11-23', end:'2026-11-23', date:'11.23', name:'세션 6', startLabel:'세션 6', color:'#00E582', background:'rgba(0,229,130,.16)' },
+  { start:'2026-12-08', end:'2026-12-14', date:'12.08 — 12.14', name:'기말고사', startLabel:'기말고사 시작', endLabel:'기말고사 종료', color:'#00E582', background:'rgba(0,229,130,.16)', rangeBackground:'rgba(0,229,130,.06)' },
+  { start:'2026-12-25', end:'2026-12-25', date:'12.25', name:'성탄절', startLabel:'성탄절', color:'#94A3B8', background:'rgba(148,163,184,.16)' }
 ];
 
 const getSeoulToday = () => {
