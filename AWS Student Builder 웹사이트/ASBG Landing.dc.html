@@ -79,7 +79,7 @@ a:hover{color:#5CFFB4}
  [data-calendar-events]{grid-template-columns:1fr !important}
  [data-calendar-dialog]{width:100% !important;max-height:calc(100dvh - 24px) !important}
  [data-calendar-dialog-header]{padding:20px 18px !important;gap:14px !important}
- [data-calendar-dialog-body]{padding:24px 18px !important}
+ [data-calendar-dialog-body]{padding:0 18px 24px !important}
  [data-cards-3] > div{border-right:0 !important;border-bottom:1px solid rgba(255,255,255,.14)}
  [data-cards-3] > div:last-child{border-bottom:0}
  [data-past-tabs]{width:100%}
@@ -335,8 +335,8 @@ a:hover{color:#5CFFB4}
       </div>
       <button type="button" onClick="{{ closeCalendar }}" data-calendar-close aria-label="캘린더 닫기" style="flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-size:14px;font-weight:700;padding:12px 15px;cursor:pointer;transition:border-color .18s ease,color .18s ease" style-hover="border-color:#00E582;color:#00E582"><span aria-hidden="true" style="font-size:21px;line-height:.7">×</span><span>닫기</span></button>
     </div>
-    <div data-calendar-dialog-body style="overflow-y:auto;padding:28px 32px 32px">
-      <div data-calendar-toolbar style="position:sticky;top:0;z-index:3;display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:16px;margin:-20px 0 20px;padding:20px 0;background:#141D26;box-shadow:0 1px 0 rgba(255,255,255,.14)">
+    <div data-calendar-dialog-body style="overflow-y:auto;padding:0 32px 32px">
+      <div data-calendar-toolbar style="position:sticky;top:0;z-index:3;display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:16px;margin:0 0 20px;padding:20px 0;background:#141D26;box-shadow:0 1px 0 rgba(255,255,255,.14)">
         <sc-if value="{{ calendarHasPrevious }}" hint-placeholder-val="{{ true }}">
           <button type="button" onClick="{{ showPreviousCalendarMonth }}" aria-label="이전 달 보기" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:22px;cursor:pointer;transition:border-color .18s ease,color .18s ease,background .18s ease" style-hover="border-color:#00E582;color:#00E582;background:rgba(0,229,130,.08)">←</button>
         </sc-if>
