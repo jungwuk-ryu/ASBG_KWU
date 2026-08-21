@@ -27,6 +27,7 @@ DIST = ROOT / "dist"
 # 배포에 포함하지 않을 것 — 에디터 부산물과 원본 소재
 EXCLUDE_DIRS = {"uploads", "scraps"}
 EXCLUDE_FILES = {".thumbnail", ".DS_Store"}
+EXCLUDE_PATH_PREFIXES = {("assets", "photos")}
 
 TITLE = "ASBG KWU 5기 모집 | AWS Student Builder Group 광운대학교"
 DESCRIPTION = (
@@ -37,7 +38,8 @@ DESCRIPTION = (
 PROJECT = "asbg-kwu"
 SITE_URL = "https://asbg-kwu.cloud"
 CANONICAL_URL = f"{SITE_URL}/"
-OG_IMAGE_URL = f"{SITE_URL}/assets/photos/og-cover.jpg"
+PHOTO_ASSET_URL = "https://assets.asbg-kwu.cloud/photos"
+OG_IMAGE_URL = f"{PHOTO_ASSET_URL}/og-cover.jpg"
 SITEMAP_LASTMOD = "2026-08-13"
 
 # support.js 가 참조하는 CDN URL → 로컬 경로 매핑
@@ -150,7 +152,13 @@ RESOURCES_TAG = (
     + "};</script>\n"
 )
 
-HEADERS = """/assets/*
+HEADERS = """/assets/photos/*
+  Cache-Control: no-store
+
+/assets/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.ttf
   Cache-Control: public, max-age=31536000, immutable
 
 /vendor/*
@@ -159,6 +167,9 @@ HEADERS = """/assets/*
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+"""
+
+REDIRECTS = f"""/assets/photos/* {PHOTO_ASSET_URL}/:splat 302
 """
 
 
@@ -184,7 +195,11 @@ def main():
     copied = 0
     for src in SITE_DIR.rglob("*"):
         rel = src.relative_to(SITE_DIR)
-        if rel.parts[0] in EXCLUDE_DIRS or rel.name in EXCLUDE_FILES:
+        if (
+            rel.parts[0] in EXCLUDE_DIRS
+            or rel.parts[:2] in EXCLUDE_PATH_PREFIXES
+            or rel.name in EXCLUDE_FILES
+        ):
             continue
         if src == entry or not src.is_file():
             continue
@@ -214,6 +229,7 @@ def main():
 
     # 5. Cloudflare Pages 설정
     (DIST / "_headers").write_text(HEADERS, encoding="utf-8")
+    (DIST / "_redirects").write_text(REDIRECTS, encoding="utf-8")
 
     total = sum(f.stat().st_size for f in DIST.rglob("*") if f.is_file())
     print(f"  진입점 : {entry.name} → index.html")

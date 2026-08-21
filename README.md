@@ -30,6 +30,7 @@ ASBG KWU는 광운대학교 AWS Student Builder Group의 공식 랜딩 페이지
 | 개발 서버 | Python 표준 라이브러리 기반 `serve.py` |
 | 빌드 | Python `build.py` |
 | 배포 | Cloudflare Pages |
+| 활동 사진 | Cloudflare R2 (`assets.asbg-kwu.cloud`) |
 
 
 
@@ -75,7 +76,7 @@ python3 build.py
 .
 ├── AWS Student Builder 웹사이트/
 │   ├── ASBG Landing.dc.html  # 페이지 마크업, 스타일, 콘텐츠, 상호작용
-│   ├── assets/               # 로고, 아이콘, 폰트, 승인된 활동 사진
+│   ├── assets/               # 로고, 아이콘, 폰트
 │   └── support.js            # Claude Design 런타임
 ├── docs/images/              # README 스크린샷
 ├── dist/                     # 배포용 정적 결과물
@@ -84,3 +85,7 @@ python3 build.py
 ├── serve.py                  # 로컬 개발 서버
 └── wrangler.jsonc            # Cloudflare Pages 설정
 ```
+
+## 활동 사진 관리
+
+갤러리 사진은 초상권 보호를 위해 Git에 추적하지 않습니다. 로컬 원본은 `AWS Student Builder 웹사이트/assets/photos/`에 두고, 공개 제공본은 Cloudflare R2의 `asbg-kwu-gallery/photos/`에 업로드합니다. 페이지와 Open Graph 이미지는 `https://assets.asbg-kwu.cloud/photos/`를 사용하며, `build.py`는 이 사진 폴더를 `dist/`에 복사하지 않습니다. 이전 `asbg-kwu.cloud/assets/photos/` 주소는 새 이미지 도메인으로 리디렉션됩니다.

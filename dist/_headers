@@ -1,4 +1,10 @@
-/assets/*
+/assets/photos/*
+  Cache-Control: no-store
+
+/assets/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.ttf
   Cache-Control: public, max-age=31536000, immutable
 
 /vendor/*
